@@ -6,7 +6,7 @@
   "dependencies": {
     "extract-text-webpack-plugin": "^3.0.2",
     "gatsby": "next",
-    "gatsby-plugin-netlify-cms": "^2.0.1",
+    "gatsby-plugin-netlify-cms": "next",
     "gatsby-plugin-react-helmet": "next",
     "netlify-cms": "^2.0.6",
     "react": "^16.4.1",

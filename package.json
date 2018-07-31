@@ -1,17 +1,16 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
+  "name": "daniel-milner-website",
+  "description": "Daniel Milner",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Daniel Milner <dmilner@gmail.com>",
   "dependencies": {
-    "extract-text-webpack-plugin": "^3.0.2",
-    "gatsby": "next",
-    "gatsby-plugin-netlify-cms": "next",
-    "gatsby-plugin-react-helmet": "next",
-    "netlify-cms": "^2.0.6",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-helmet": "^5.2.0"
+    "gatsby": "^1.9.277",
+    "gatsby-link": "^1.6.46",
+    "gatsby-plugin-google-fonts": "0.0.4",
+    "gatsby-plugin-react-helmet": "^2.0.11",
+    "gatsby-plugin-styled-components": "^2.0.11",
+    "react-helmet": "^5.2.0",
+    "styled-components": "^3.3.3"
   },
   "keywords": [
     "gatsby"
@@ -24,7 +23,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "prettier": "^1.14.0"
+    "prettier": "^1.13.7"
   },
   "repository": {
     "type": "git",

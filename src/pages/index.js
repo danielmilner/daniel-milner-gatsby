@@ -1,15 +1,47 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import Link from 'gatsby-link'
+import styled from 'styled-components'
 
-import Layout from '../components/layout'
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10rem 0;
+`
+
+const DanielMilner = styled.div`
+  font-family: ${props => props.theme.sanSerifFont};
+  font-weight: 700;
+  font-size: 10vw;
+  color: #000;
+  text-align: center;
+  width: 100%;
+  & > span {
+    color: ${props => props.theme.primaryColor};
+  }
+`
+
+const WhatIDo = styled.div`
+  font-family: ${props => props.theme.sanSerifFont};
+  font-weight: 300;
+  font-size: 5vw;
+  text-align: center;
+  width: 100%;
+  margin-top: 1rem;
+  color: ${props => props.theme.textColor};
+  & > span {
+    color: #000;
+  }
+`
 
 const IndexPage = () => (
-  <Layout>
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
+  <PageContainer>
+    <DanielMilner>
+      Daniel <span>Milner</span>
+    </DanielMilner>
+    <WhatIDo>
+      {'{'} <span>webDeveloper</span> {'}'}
+    </WhatIDo>
+  </PageContainer>
 )
 
 export default IndexPage

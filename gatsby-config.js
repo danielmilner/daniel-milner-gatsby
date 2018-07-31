@@ -1,9 +1,15 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: 'Daniel Milner',
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-netlify-cms'
-    ],
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-styled-components`,
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [`merriweather\:300,400,900`, `montserrat\:400,700`],
+      },
+    },
+  ],
 }

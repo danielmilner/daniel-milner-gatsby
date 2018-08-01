@@ -30,7 +30,7 @@ const AvatarImage = styled.img`
   box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
-    border: 2px solid #fff;
+    border: 3px solid #fff;
   }
 `
 
@@ -77,6 +77,7 @@ const MenuLink = styled(Link)`
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     font-size: 1.5rem;
+    font-weight: 700;
   }
 `
 

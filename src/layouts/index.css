@@ -20,6 +20,7 @@ body:before {
   left: -20rem;
   right: -20rem;
   height: 24rem;
+  width: 100%;
   z-index: -1;
   transform: rotate(-1.5deg);
   background: rgba(75,208,232,1);

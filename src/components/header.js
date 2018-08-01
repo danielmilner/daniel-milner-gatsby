@@ -85,7 +85,7 @@ const Header = ({ siteTitle }) => (
     <Avatar to="/" src={daniel} alt={siteTitle} />
     <Menu>
       <MenuItem to="/about" title="About" />
-      <MenuItem to="/projects" title="Project" />
+      <MenuItem to="/projects" title="Projects" />
       <MenuItem to="/contact" title="Contact" />
     </Menu>
   </HeaderContainer>

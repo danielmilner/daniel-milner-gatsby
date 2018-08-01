@@ -28,6 +28,10 @@ const AvatarImage = styled.img`
   -webkit-box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    border: 2px solid #fff;
+  }
 `
 
 const Menu = styled.ul`
@@ -64,7 +68,7 @@ const MenuLink = styled(Link)`
   color: #fff;
   font-size: 2.4rem;
   font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 300;
+  font-weight: 400;
 
   &:hover,
   &:active {

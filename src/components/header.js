@@ -1,14 +1,14 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
+import Img from 'gatsby-image'
 import daniel from '../images/daniel.jpg'
 
 const HeaderContainer = styled.div`
-  background-color: #fff;
   margin-bottom: 1.45rem;
-  border-bottom: 1px solid #e5e5e5;
+  // border-bottom: 1px solid #e5e5e5;
   display: grid;
-  grid-template-columns: 8rem 1fr;
+  grid-template-columns: 10rem 1fr;
   grid-template-areas: 'logo menu';
   grid-gap: 5rem;
   padding: 2rem 3rem;
@@ -24,6 +24,10 @@ const AvatarImage = styled.img`
   width: 100%;
   height: auto;
   border-radius: 50%;
+  border: 5px solid #fff;
+  -webkit-box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
 `
 
 const Menu = styled.ul`
@@ -31,7 +35,11 @@ const Menu = styled.ul`
   align-self: center;
   justify-self: end;
   margin: 0;
-  padding: 0;
+  padding: 0 0 2rem 0;
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    padding: 0 0 1rem 0;
+  }
 `
 
 const MenuItemContainer = styled.li`
@@ -53,14 +61,14 @@ const AvatarLink = styled(Link)`
 
 const MenuLink = styled(Link)`
   text-decoration: none;
-  color: ${props => props.theme.textColor};
+  color: #fff;
   font-size: 2.4rem;
-  font-family: ${props => props.theme.serifFont};
+  font-family: ${props => props.theme.sanSerifFont};
   font-weight: 300;
 
   &:hover,
   &:active {
-    border-bottom: 2px solid ${props => props.theme.primaryColor};
+    border-bottom: 3px solid #000;
   }
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
@@ -84,7 +92,6 @@ const Header = ({ siteTitle }) => (
   <HeaderContainer>
     <Avatar to="/" src={daniel} alt={siteTitle} />
     <Menu>
-      <MenuItem to="/about" title="About" />
       <MenuItem to="/projects" title="Projects" />
       <MenuItem to="/contact" title="Contact" />
     </Menu>

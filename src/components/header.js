@@ -14,7 +14,7 @@ const HeaderContainer = styled.div`
   padding: 2rem 3rem;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
-    grid-template-columns: 5rem 1fr;
+    grid-template-columns: 6rem 1fr;
     grid-gap: 1rem;
     padding: 2rem;
   }
@@ -42,7 +42,7 @@ const Menu = styled.ul`
   padding: 0 0 2rem 0;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
-    padding: 0 0 1rem 0;
+    padding: 0 0 2rem 0;
   }
 `
 

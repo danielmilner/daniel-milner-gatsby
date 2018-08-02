@@ -29,7 +29,7 @@ const ProjectWrapper = styled.div`
 `
 
 const ProjectTitle = styled.div`
-  font-family: ${props => props.theme.sansSerifFont};
+  font-family: ${props => props.theme.sanSerifFont};
   font-size: 2.4rem;
   font-weight: 700;
   color: #000;

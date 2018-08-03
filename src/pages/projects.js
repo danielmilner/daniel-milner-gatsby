@@ -13,6 +13,7 @@ const ProjectWrapper = styled.div`
   box-shadow: 0.4rem 0.4rem 1.8rem 0 rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   font-size: 1.7rem;
+  font-weight: 300;
   font-family: ${props => props.theme.serifFont};
   color: ${props => props.theme.textColor};
   margin-bottom: 5rem;

@@ -8,19 +8,20 @@ const FooterContainer = styled.div`
   font-family: ${props => props.theme.sanSerifFont};
   font-size: 1.3rem;
   color: ${props => props.theme.textColor};
-  font-weight: 200;
+  font-weight: 300;
 `
 
 const GatsbyIcon = styled.img`
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
   vertical-align: middle;
   margin-left: 0.3rem;
+  margin-bottom: 0.3rem;
 `
 
 const Footer = ({ siteTitle }) => (
   <FooterContainer>
-    Site created with{' '}
+    Created with{' '}
     <a href="https://gatsbyjs.org/" title="Gatsby">
       <GatsbyIcon src={gatsbyIcon} />
     </a>

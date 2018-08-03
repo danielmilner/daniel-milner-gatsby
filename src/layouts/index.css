@@ -10,34 +10,7 @@ body {
   height: 100%;
   background-color: #fff;
   font-size: 10px;
-  font-family: 'Montserrat';
-}
-
-body:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 15.5rem;
-  width: 100%;
-  z-index: -1;
-  -webkit-clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
-  background: rgba(75,208,232,1);
-  background: -moz-radial-gradient(left, circle cover, rgba(75,208,232,1) 0%, rgba(32,124,229,1) 100%);
-  background: -webkit-gradient(radial, center left, 0px, center center, 100%, color-stop(0%, rgba(75,208,232,1)), color-stop(100%, rgba(32,124,229,1)));
-  background: -webkit-radial-gradient(left, circle cover, rgba(75,208,232,1) 0%, rgba(32,124,229,1) 100%);
-  background: -o-radial-gradient(left, circle cover, rgba(75,208,232,1) 0%, rgba(32,124,229,1) 100%);
-  background: -ms-radial-gradient(left, circle cover, rgba(75,208,232,1) 0%, rgba(32,124,229,1) 100%);
-  background: radial-gradient(circle at left, rgba(75,208,232,1) 0%, rgba(32,124,229,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4bd0e8', endColorstr='#207ce5', GradientType=1 );
-}
-
-@media (max-width: 768px) {
-  body:before {
-    height: 11rem;
-  }
+  font-family: 'Merriweather';
 }
 
 p a {

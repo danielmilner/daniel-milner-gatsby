@@ -1,9 +1,9 @@
 const theme = {
   primaryColor: '#4A99F5',
   textColor: '#999999',
-  textSize: '1.7rem',
+  textSize: '1.8rem',
   serifFont: 'Merriweather',
-  sanSerifFont: 'Montserrat',
+  sanSerifFont: 'Ubuntu',
   desktopWidth: '960px',
   tabletWidth: '768px',
   phoneWidth: '576px',

@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
-import Img from 'gatsby-image'
 import daniel from '../images/daniel.jpg'
 
 const HeaderContainer = styled.div`

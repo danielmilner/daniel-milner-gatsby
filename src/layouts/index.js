@@ -38,7 +38,7 @@ const Layout = ({ children, data }) => (
         />
       </Helmet>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <SiteContent>{children()}</SiteContent>
+      <SiteContent className="site-content">{children()}</SiteContent>
       <Footer />
     </div>
   </ThemeProvider>

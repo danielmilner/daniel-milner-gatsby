@@ -5,15 +5,18 @@ backend:
 publish_mode: editorial_workflow
 media_folder: static/assets
 public_folder: assets
+display_url: https://danielmilner.com
 
 collections:
   - name: blog
     label: Blog
     folder: blog
     create: true
+    slug: "{{ year }}-{{ month }}-{{ day }}_{{ slug }}"
     fields:
       - { name: path, label: Path }
       - { name: date, label: Date, widget: date }
       - { name: title, label: Title }
+      - { name: image, label: Image }
       - { name: body, label: Body, widget: markdown }
 

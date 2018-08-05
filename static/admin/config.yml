@@ -9,14 +9,46 @@ display_url: https://danielmilner.com
 
 collections:
   - name: blog
-    label: Blog
+    label: "Blog"
     folder: blog
     create: true
     slug: "{{ year }}-{{ month }}-{{ day }}_{{ slug }}"
     fields:
-      - { name: path, label: Path }
-      - { name: date, label: Date, widget: date }
-      - { name: title, label: Title }
-      - { name: image, label: Image, widget: image, required: false }
-      - { name: body, label: Body, widget: markdown }
-
+      - { name: path, label: "Path" }
+      - { name: date, label: "Date", widget: datetime }
+      - { name: title, label: "Title" }
+      - { name: image, label: "Image", widget: image, required: false }
+      - { name: body, label: "Body", widget: markdown }
+  - name: pages
+    label: "Pages"
+    folder: pages
+    create: true
+    slug: "{{ slug }}"
+    fields:
+      - { name: path, label: "Path" }
+      - { name: date, label: "Date", widget: datetime }
+      - { name: title, label: "Title" }
+      - name: layout
+        label: "Layout"
+        widget: select
+        options:
+          - { label: "Default", value: default }
+          - { label: "Projects", value: projects }
+          - { label: "Contact", value: projects }
+      - { name: body, label: "Body", widget: markdown }
+  - name: projects
+    label: "Projects"
+    folder: projects
+    create: ture
+    slug: "{{ slug }}"
+    fields:
+      - { name: title, label: "Name" }
+      - { name: url, label: "URL" }
+      - name: technologies
+        label: "Technologies"
+        widget: list
+        fields:
+          - { name: name, label: "Name" }
+          - { name: icon, label: "Icon" }
+          - { name: color, label: "Color" }
+      - { name: body, label: "Body", widget: markdown }

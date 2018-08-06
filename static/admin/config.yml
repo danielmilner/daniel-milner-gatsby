@@ -1,6 +1,7 @@
 backend:
   name: github
   repo: danielmilner/daniel-milner-gatsby
+  branch: master
 
 publish_mode: editorial_workflow
 media_folder: static/assets

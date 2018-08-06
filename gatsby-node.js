@@ -16,6 +16,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
   return graphql(`
     {
       allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "/^(?=.*/pages)(?!.*/cms).*/gm" } }
         sort: { order: DESC, fields: [frontmatter___date] }
         limit: 1000
       ) {

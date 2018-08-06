@@ -10,24 +10,25 @@ display_url: https://danielmilner.com
 collections:
   - name: blog
     label: "Blog"
-    folder: blog
+    folder: "src/cms/blog"
     create: true
     slug: "{{ year }}-{{ month }}-{{ day }}_{{ slug }}"
     fields:
-      - { name: path, label: "Path" }
+      - { name: path, label: "Path", widget: string }
       - { name: date, label: "Date", widget: datetime }
-      - { name: title, label: "Title" }
+      - { name: title, label: "Title", widget: string }
       - { name: image, label: "Image", widget: image, required: false }
       - { name: body, label: "Body", widget: markdown }
+
   - name: pages
     label: "Pages"
-    folder: pages
+    folder: "src/cms/pages"
     create: true
     slug: "{{ slug }}"
     fields:
-      - { name: path, label: "Path" }
+      - { name: path, label: "Path", widget: string }
       - { name: date, label: "Date", widget: datetime }
-      - { name: title, label: "Title" }
+      - { name: title, label: "Title", widget: string }
       - name: layout
         label: "Layout"
         widget: select
@@ -36,19 +37,37 @@ collections:
           - { label: "Projects", value: projects }
           - { label: "Contact", value: projects }
       - { name: body, label: "Body", widget: markdown }
+  
   - name: projects
     label: "Projects"
-    folder: projects
+    folder: "src/cms/projects"
     create: ture
     slug: "{{ slug }}"
     fields:
-      - { name: title, label: "Name" }
-      - { name: url, label: "URL" }
+      - { name: title, label: "Name", widget: string }
+      - { name: url, label: "URL", widget: string }
       - name: technologies
         label: "Technologies"
         widget: list
         fields:
-          - { name: name, label: "Name" }
-          - { name: icon, label: "Icon" }
-          - { name: color, label: "Color" }
+          - { name: name, label: "Name", widget: string }
+          - { name: icon, label: "Icon", widget: string }
+          - { name: color, label: "Color", widget: string }
       - { name: body, label: "Body", widget: markdown }
+  
+  - name: settings
+    label: "Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/cms/settings/navigation.yml"
+        name: "navigation"
+        label: "Navigation"
+        fields:
+          - name: "primary-nav"
+            label: "Primary Navigation"
+            widget: "list"
+            fields:
+              - { name: title, label: "Title", widget: string }
+              - { name: "page", label: "Page", widget: "relation", collection: "pages", displayFields: ["title", "path"], searchFields: ["title", "path"], valueField: "path" }

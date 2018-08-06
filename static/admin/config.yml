@@ -3,7 +3,7 @@ backend:
   repo: danielmilner/daniel-milner-gatsby
   branch: master
 
-publish_mode: editorial_workflow
+#publish_mode: editorial_workflow
 media_folder: static/assets
 public_folder: assets
 display_url: https://danielmilner.com

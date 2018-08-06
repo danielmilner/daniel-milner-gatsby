@@ -1,0 +1,8 @@
+---
+primary-nav:
+  - page: projects
+    title: Projects
+  - page: contact
+    title: Contact
+---
+

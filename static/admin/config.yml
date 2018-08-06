@@ -13,7 +13,7 @@ collections:
     label: "Blog"
     folder: "src/cms/blog"
     create: true
-    slug: "{{ year }}-{{ month }}-{{ day }}_{{ slug }}"
+    slug: "{{year}}-{{month}}-{{day}}_{{slug}}"
     fields:
       - { name: path, label: "Path", widget: string }
       - { name: date, label: "Date", widget: datetime }
@@ -25,7 +25,7 @@ collections:
     label: "Pages"
     folder: "src/cms/pages"
     create: true
-    slug: "{{ slug }}"
+    slug: "{{slug}}"
     fields:
       - { name: path, label: "Path", widget: string }
       - { name: date, label: "Date", widget: datetime }
@@ -43,10 +43,11 @@ collections:
     label: "Projects"
     folder: "src/cms/projects"
     create: ture
-    slug: "{{ slug }}"
+    slug: "{{slug}}"
     fields:
-      - { name: title, label: "Name", widget: string }
-      - { name: url, label: "URL", widget: string }
+      - { label: "Name", name: "title", widget: "string" }
+      - { name: "url", label: "URL", widget: "string" }
+      - { name: "order", label: "Order", widget: "number", default: 0, valueType: "int", min: 1 }
       - name: technologies
         label: "Technologies"
         widget: list

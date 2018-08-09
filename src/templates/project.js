@@ -17,8 +17,8 @@ export default function Template({
   )
 }
 
-export const projectTemplateQuery = graphql`
-  query PageByPath($path: String!) {
+export const pageQuery = graphql`
+  query ProjectByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
       frontmatter {

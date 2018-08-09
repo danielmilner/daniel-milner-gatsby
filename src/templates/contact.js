@@ -3,8 +3,18 @@ import PageTitle from '../components/PageTitle'
 import PageContainer from '../components/PageContainer'
 import PageText from '../components/PageText'
 import Project from '../components/Project'
+import styled from 'styled-components'
 
 require('prismjs/themes/prism-tomorrow.css')
+
+const SocialMediaContainer = styled.div`
+  display: block;
+`
+
+const SocialMediaIcon = styled.a`
+  font-size: 4rem;
+  margin-right: 2rem;
+`
 
 export default function Template({
   data, // this prop will be injected by the GraphQL query we'll write in a bit
@@ -14,20 +24,25 @@ export default function Template({
     <PageContainer>
       <PageTitle>{post.frontmatter.title}</PageTitle>
       <PageText dangerouslySetInnerHTML={{ __html: post.html }} />
-      {data.projects.edges.map(({ node }) => (
-        <Project
-          link={node.frontmatter.url}
-          name={node.frontmatter.title}
-          desc={node.html}
-          tech={node.frontmatter.technologies}
-        />
-      ))}
+      <SocialMediaContainer>
+        {Object.keys(data.social.frontmatter.links).map(key => (
+          <SocialMediaIcon
+            href={data.social.frontmatter.links[key].url}
+            alt={data.social.frontmatter.links[key].title}
+          >
+            <i
+              className={data.social.frontmatter.links[key].icon}
+              style={{ color: data.social.frontmatter.links[key].color }}
+            />
+          </SocialMediaIcon>
+        ))}
+      </SocialMediaContainer>
     </PageContainer>
   )
 }
 
 export const pageQuery = graphql`
-  query ProjectByPath($path: String!) {
+  query ContactByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
       frontmatter {
@@ -36,23 +51,15 @@ export const pageQuery = graphql`
         title
       }
     }
-    projects: allMarkdownRemark(
-      filter: { fileAbsolutePath: { regex: "/^(?=.*/cms/projects)/gm" } }
-      sort: { order: ASC, fields: [frontmatter___order] }
-      limit: 1000
+    social: markdownRemark(
+      fileAbsolutePath: { regex: "/^(?=.*/cms/settings/social-media).*/gm" }
     ) {
-      edges {
-        node {
-          frontmatter {
-            title
-            url
-            technologies {
-              color
-              icon
-              name
-            }
-          }
-          html
+      frontmatter {
+        links {
+          color
+          icon
+          title
+          url
         }
       }
     }

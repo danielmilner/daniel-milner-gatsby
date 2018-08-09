@@ -2,6 +2,7 @@
 path: "/"
 date: "2018-08-02T17:12:33.962Z"
 title: "Hey There, I'm Daniel"
+layout: default
 ---
 
 ## About Me

@@ -5,8 +5,6 @@ import PageText from '../components/PageText'
 
 require('prismjs/themes/prism-tomorrow.css')
 
-// import '../css/blog-post.css'; // make it pretty!
-
 export default function Template({
   data, // this prop will be injected by the GraphQL query we'll write in a bit
 }) {

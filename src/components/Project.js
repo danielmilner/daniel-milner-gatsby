@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 const ProjectContainer = styled.div`
@@ -5,13 +6,15 @@ const ProjectContainer = styled.div`
   box-shadow: 0px 4px 3rem rgba(0, 0, 0, 0.25);
   border-radius: 2.5rem;
   padding: 3rem;
+  margin: 5rem 0;
 `
 
 const ProjectLink = styled.a`
   float: right;
   display: block;
   color: ${props => props.theme.primaryColor};
-  font-size: 2rem;
+  font-size: 1.8rem;
+  text-decoration: none;
 `
 
 const ProjectName = styled.div`
@@ -35,15 +38,44 @@ const ProjectTechContainer = styled.div`
   margin-top: 1rem;
 `
 
+const ProjectTechBadge = styled.div`
+  background-color: #efeded;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 1rem;
+  font-family: ${props => props.theme.sanSerifFont};
+  text-transform: uppercase;
+  display: inline-block;
+  margin-right: 1rem;
+
+  i {
+    font-size: 1.6rem;
+    vertical-align: middle;
+    margin-right: 0.2rem;
+  }
+`
+
 const Project = props => (
   <ProjectContainer>
-    <ProjectLink href={props.link}>
-      <i class="fas fa-external-link-alt" />
-    </ProjectLink>
+    {(props.link &&
+      props.link !== '' && (
+        <ProjectLink href={props.link}>
+          <i className="fas fa-external-link-alt" />
+        </ProjectLink>
+      )) ||
+      null}
     <ProjectName>{props.name}</ProjectName>
-    <ProjectDesc>{props.desc}</ProjectDesc>
+    <ProjectDesc dangerouslySetInnerHTML={{ __html: props.desc }} />
     <ProjectTechContainer>
-      Tech goes here.
+      {Object.keys(props.tech).map(key => (
+        <ProjectTechBadge>
+          <i
+            className={props.tech[key].icon}
+            style={{ color: props.tech[key].color }}
+          />{' '}
+          {props.tech[key].name}
+        </ProjectTechBadge>
+      ))}
     </ProjectTechContainer>
   </ProjectContainer>
 )

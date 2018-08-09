@@ -12,11 +12,13 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators
 
   const pageTemplate = path.resolve(`src/templates/page.js`)
+  const projectTemplate = path.resolve(`src/templates/project.js`)
+  const contactTemplate = path.resolve(`src/templates/contact.js`)
 
   return graphql(`
     {
       allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/^(?=.*/pages)(?!.*/cms).*/gm" } }
+        filter: { fileAbsolutePath: { regex: "/^(?=.*/cms/pages)/gm" } }
         sort: { order: DESC, fields: [frontmatter___date] }
         limit: 1000
       ) {
@@ -24,6 +26,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
           node {
             frontmatter {
               path
+              layout
             }
           }
         }
@@ -33,10 +36,20 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     if (result.errors) {
       return Promise.reject(result.errors)
     }
+    let layoutComponent = pageTemplate
     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+      layoutComponent = pageTemplate
+      switch (node.frontmatter.layout) {
+        case 'projects':
+          layoutComponent = projectTemplate
+          break
+        case 'contact':
+          layoutComponent = contactTemplate
+          break
+      }
       createPage({
         path: node.frontmatter.path,
-        component: pageTemplate,
+        component: layoutComponent,
         context: {}, // additional data can be passed via context
       })
     })

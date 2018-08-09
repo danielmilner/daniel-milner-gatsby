@@ -7,8 +7,9 @@ const ProjectContainer = styled.div`
   padding: 3rem;
 `
 
-const ProjectLink = styled(Link)`
+const ProjectLink = styled.a`
   float: right;
+  display: block;
   color: ${props => props.theme.primaryColor};
   font-size: 2rem;
 `
@@ -30,13 +31,20 @@ const ProjectDesc = styled.div`
   color: ${props => props.theme.textColor};
 `
 
+const ProjectTechContainer = styled.div`
+  margin-top: 1rem;
+`
+
 const Project = props => (
   <ProjectContainer>
-    <ProjectLink src={props.link}>
+    <ProjectLink href={props.link}>
       <i class="fas fa-external-link-alt" />
     </ProjectLink>
     <ProjectName>{props.name}</ProjectName>
     <ProjectDesc>{props.desc}</ProjectDesc>
+    <ProjectTechContainer>
+      Tech goes here.
+    </ProjectTechContainer>
   </ProjectContainer>
 )
 

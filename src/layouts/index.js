@@ -37,7 +37,10 @@ const Layout = ({ children, data }) => (
           crossorigin="anonymous"
         />
       </Helmet>
-      <Header siteTitle={data.site.siteMetadata.title} />
+      <Header
+        siteTitle={data.site.siteMetadata.title}
+        pages={data.primary_nav.frontmatter.primary_nav}
+      />
       <SiteContent className="site-content">{children()}</SiteContent>
       <Footer />
     </div>
@@ -55,6 +58,16 @@ export const query = graphql`
     site {
       siteMetadata {
         title
+      }
+    }
+    primary_nav: markdownRemark(
+      fileAbsolutePath: { regex: "/^(?=.*/cms/settings/navigation).*/gm" }
+    ) {
+      frontmatter {
+        primary_nav {
+          page
+          title
+        }
       }
     }
   }

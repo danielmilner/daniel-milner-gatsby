@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import daniel from '../images/daniel.jpg'
 
 const HeaderContainer = styled.div`
-  background-color: #f8f8f8;
+  // background-color: #f8f8f8;
   margin-bottom: 1.45rem;
   // border-bottom: 1px solid #e5e5e5;
   display: grid;
@@ -40,9 +40,9 @@ const SiteNameLink = styled(Link)`
 const SiteNameText = styled.div`
   font-family: ${props => props.theme.sanSerifFont};
   font-weight: 700;
-  font-size: 3.6rem;
+  font-size: 5rem;
   color: #000;
-  text-transform: uppercase;
+  text-transform: none;
 
   & span {
     color: ${props => props.theme.primaryColor};
@@ -60,14 +60,6 @@ const Menu = styled.ul`
 const MenuItemContainer = styled.li`
   padding: 0;
   display: inline-block;
-
-  &:not(:first-of-type) {
-    margin-left: 5rem;
-
-    @media (max-width: ${props => props.theme.tabletWidth}) {
-      margin-left: 2rem;
-    }
-  }
 `
 
 const AvatarLink = styled(Link)`
@@ -77,19 +69,22 @@ const AvatarLink = styled(Link)`
 const MenuLink = styled(Link)`
   text-decoration: none;
   color: ${props => props.theme.textColor};
-  font-size: 2rem;
+  font-size: 1.9rem;
   font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
+  padding: 1.5rem;
+  margin: 0 0.5rem;
+  border-bottom: 3px solid transparent;
 
   &:hover,
   &:active {
-    color: ${props => props.theme.primaryColor};
+    border-bottom: 3px solid ${props => props.theme.primaryColor};
   }
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     font-size: 1.5rem;
-    font-weight: 700;
+    padding: 1rem;
   }
 `
 
@@ -107,19 +102,18 @@ const Avatar = props => (
 
 const SiteName = props => (
   <SiteNameLink to={props.to}>
-    <SiteNameText>
-      Daniel <span>Milner</span>
-    </SiteNameText>
+    <SiteNameText>Daniel Milner</SiteNameText>
   </SiteNameLink>
 )
 
-const Header = ({ siteTitle }) => (
+const Header = ({ siteTitle, pages }) => (
   <HeaderContainer>
     <Avatar to="/" src={daniel} alt={siteTitle} />
     <SiteName to="/" />
     <Menu>
-      <MenuItem to="/projects" title="Projects" />
-      <MenuItem to="/contact" title="Contact" />
+      {Object.keys(pages).map(key => (
+        <MenuItem to={pages[key].page} title={pages[key].title} />
+      ))}
     </Menu>
   </HeaderContainer>
 )

@@ -1,5 +1,5 @@
 const theme = {
-  primaryColor: '#4A99F5',
+  primaryColor: 'rgb(80, 124, 196)',
   textColor: '#999999',
   textSize: '1.8rem',
   serifFont: 'Merriweather',

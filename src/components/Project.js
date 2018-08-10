@@ -2,11 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const ProjectContainer = styled.div`
-  background: #ffffff;
-  box-shadow: 0px 4px 3rem rgba(0, 0, 0, 0.25);
-  border-radius: 2.5rem;
-  padding: 3rem;
-  margin: 5rem 0;
+  margin: 7rem 0;
 `
 
 const ProjectLink = styled.a`

@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import daniel from '../images/daniel.jpg'
 
 const HeaderContainer = styled.div`
-  // background-color: #f8f8f8;
   margin-bottom: 1.45rem;
-  // border-bottom: 1px solid #e5e5e5;
   display: grid;
   grid-template-columns: 8rem 2fr 3fr;
   grid-template-areas: 'logo site-name menu';
   grid-gap: 3rem;
   padding: 2rem 3rem;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+  background: linear-gradient(rgba(56,86,135,0.7), rgba(56,86,135,0.7)), url(./assets/header-bg.png);
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     grid-template-columns: 6rem 1fr;
@@ -25,6 +25,13 @@ const AvatarImage = styled.img`
   width: 100%;
   height: auto;
   border-radius: 50%;
+  filter: hue-rotate(220deg);
+  border: 3px solid white;
+
+  &:hover,
+  &:active {
+    filter: hue-rotate(0deg);
+  }
 `
 
 const SiteNameLink = styled(Link)`
@@ -40,20 +47,24 @@ const SiteNameLink = styled(Link)`
 const SiteNameText = styled.div`
   font-family: ${props => props.theme.sanSerifFont};
   font-weight: 700;
-  font-size: 5rem;
-  color: #000;
+  font-size: 3.5rem;
+  color: #fff;
   text-transform: none;
+`
 
-  & span {
-    color: ${props => props.theme.primaryColor};
-  }
+const SiteNameDesc = styled.div`
+  font-family: ${props => props.theme.sanSerifFont};
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+  text-transform: none;
 `
 
 const Menu = styled.ul`
   grid-area: menu;
   align-self: center;
   justify-self: end;
-  margin: 0;
+  margin: -2rem 0 0 0;
   padding: 0;
 `
 
@@ -68,18 +79,17 @@ const AvatarLink = styled(Link)`
 
 const MenuLink = styled(Link)`
   text-decoration: none;
-  color: ${props => props.theme.textColor};
-  font-size: 1.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5rem;
   font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   padding: 1.5rem;
   margin: 0 0.5rem;
-  border-bottom: 3px solid transparent;
 
   &:hover,
   &:active {
-    border-bottom: 3px solid ${props => props.theme.primaryColor};
+    color: #fff;
   }
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
@@ -103,6 +113,7 @@ const Avatar = props => (
 const SiteName = props => (
   <SiteNameLink to={props.to}>
     <SiteNameText>Daniel Milner</SiteNameText>
+    <SiteNameDesc>Full Stack Web Developer</SiteNameDesc>
   </SiteNameLink>
 )
 

@@ -1,8 +1,10 @@
 ---
 primary-nav:
-  - page: projects
+  - icon: far fa-file-code
+    page: /projects
     title: Projects
-  - page: contact
+  - icon: far fa-envelope
+    page: /contact
     title: Contact
 ---
 

@@ -83,7 +83,7 @@ const MenuLink = styled(Link)`
   font-size: 1.5rem;
   font-family: ${props => props.theme.sanSerifFont};
   font-weight: 400;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   padding: 1.5rem;
   margin: 0 0.5rem;
 
@@ -98,9 +98,17 @@ const MenuLink = styled(Link)`
   }
 `
 
+const MenuIcon = styled.i`
+  font-size: 2rem;
+  margin-right: 0.5rem;
+  vertical-align: text-bottom;
+`
+
 const MenuItem = props => (
   <MenuItemContainer>
-    <MenuLink to={props.to}>{props.title}</MenuLink>
+    <MenuLink to={props.to}>
+      <MenuIcon className={props.icon} /> {props.title}
+    </MenuLink>
   </MenuItemContainer>
 )
 
@@ -123,7 +131,11 @@ const Header = ({ siteTitle, pages }) => (
     <SiteName to="/" />
     <Menu>
       {Object.keys(pages).map(key => (
-        <MenuItem to={pages[key].page} title={pages[key].title} />
+        <MenuItem
+          to={pages[key].page}
+          title={pages[key].title}
+          icon={pages[key].icon}
+        />
       ))}
     </Menu>
   </HeaderContainer>

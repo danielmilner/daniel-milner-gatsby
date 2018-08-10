@@ -67,6 +67,7 @@ export const query = graphql`
         primary_nav {
           page
           title
+          icon
         }
       }
     }

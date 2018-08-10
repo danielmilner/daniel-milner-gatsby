@@ -15,9 +15,10 @@ const HeaderContainer = styled.div`
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     grid-template-columns: 6rem 1fr;
-    grid-template-areas 'logo menu';
-    grid-gap: 1rem;
+    grid-template-areas 'logo site-name';
+    grid-gap: 2rem;
     padding: 2rem;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
   }
 `
 
@@ -40,7 +41,7 @@ const SiteNameLink = styled(Link)`
   text-decoration: none;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
-    display: none;
+    // display: none;
   }
 `
 
@@ -50,6 +51,10 @@ const SiteNameText = styled.div`
   font-size: 3.5rem;
   color: #fff;
   text-transform: none;
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    font-size: 2.2rem;
+  }
 `
 
 const SiteNameDesc = styled.div`
@@ -58,6 +63,10 @@ const SiteNameDesc = styled.div`
   font-size: 1.5rem;
   color: #fff;
   text-transform: none;
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    font-size: 1.2rem;
+  }
 `
 
 const Menu = styled.ul`
@@ -66,6 +75,10 @@ const Menu = styled.ul`
   justify-self: end;
   margin: -2rem 0 0 0;
   padding: 0;
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    display: none;
+  }
 `
 
 const MenuItemContainer = styled.li`
@@ -125,13 +138,14 @@ const SiteName = props => (
   </SiteNameLink>
 )
 
-const Header = ({ siteTitle, pages }) => (
+const Header = ({ siteTitle, pages, handleMobileMenu }) => (
   <HeaderContainer>
     <Avatar to="/" src={daniel} alt={siteTitle} />
     <SiteName to="/" />
     <Menu>
       {Object.keys(pages).map(key => (
         <MenuItem
+          key={key}
           to={pages[key].page}
           title={pages[key].title}
           icon={pages[key].icon}

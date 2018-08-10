@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 
 import Header from '../components/header'
 import Footer from '../components/footer'
+import MobileMenuContainer from '../components/MobileMenuContainer'
 import './index.css'
 import { ThemeProvider } from 'styled-components'
 import styled from 'styled-components'
@@ -19,7 +20,7 @@ const SiteContent = styled.div`
 
 const Layout = ({ children, data }) => (
   <ThemeProvider theme={theme}>
-    <div>
+    <MobileMenuContainer pages={data.primary_nav.frontmatter.primary_nav}>
       <Helmet
         title={data.site.siteMetadata.title}
         meta={[
@@ -43,7 +44,7 @@ const Layout = ({ children, data }) => (
       />
       <SiteContent className="site-content">{children()}</SiteContent>
       <Footer />
-    </div>
+    </MobileMenuContainer>
   </ThemeProvider>
 )
 

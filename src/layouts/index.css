@@ -12,6 +12,8 @@ body {
   background-color: #fff;
   font-size: 10px;
   font-family: 'Merriweather';
+  background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url(../../static/assets/geometry.png);
+  background-size: 400px 400px;
 }
 
 .site-content p a {

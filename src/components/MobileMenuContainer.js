@@ -62,10 +62,8 @@ class MobileMenuContainer extends Component {
   }
 
   handleMouseDown(e) {
-    alert('clicked')
     this.toggleMenu()
 
-    console.log('clicked')
     e.stopPropagation()
   }
 

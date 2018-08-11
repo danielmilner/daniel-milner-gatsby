@@ -39,6 +39,7 @@ const SiteNameLink = styled(Link)`
   grid-area: site-name;
   align-self: center;
   text-decoration: none;
+  margin-right: 4rem;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     // display: none;

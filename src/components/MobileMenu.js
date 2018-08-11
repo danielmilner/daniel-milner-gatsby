@@ -35,7 +35,7 @@ class MobileMenu extends Component {
       visibility = 'show'
     }
     return (
-      <MobileMenuInner className={visibility}>
+      <MobileMenuInner className={visibility} onClick={this.props.onClick}>
         {this.props.children}
       </MobileMenuInner>
     )

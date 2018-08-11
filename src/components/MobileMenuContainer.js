@@ -77,7 +77,10 @@ class MobileMenuContainer extends Component {
     return (
       <div>
         <MobileMenuButton onClick={this.handleMouseDown} />
-        <MobileMenu menuVisibility={this.state.visible}>
+        <MobileMenu
+          menuVisibility={this.state.visible}
+          onClick={this.handleMouseDown}
+        >
           <Menu>
             {Object.keys(this.props.pages).map(key => (
               <MenuItem

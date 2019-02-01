@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const MobileMenuInner = styled.div`
@@ -25,9 +25,6 @@ const MobileMenuInner = styled.div`
 `
 
 class MobileMenu extends Component {
-  constructor(props, context) {
-    super(props, context)
-  }
   render() {
     var visibility = 'hide'
 

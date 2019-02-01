@@ -2,8 +2,8 @@ import React from 'react'
 import PageTitle from '../components/PageTitle'
 import PageContainer from '../components/PageContainer'
 import PageText from '../components/PageText'
-import Project from '../components/Project'
 import styled from 'styled-components'
+import Layout from '../components/Layout'
 
 require('prismjs/themes/prism-tomorrow.css')
 
@@ -21,23 +21,25 @@ export default function Template({
 }) {
   const { markdownRemark: post } = data // data.markdownRemark holds our post data
   return (
-    <PageContainer>
-      <PageTitle>{post.frontmatter.title}</PageTitle>
-      <PageText dangerouslySetInnerHTML={{ __html: post.html }} />
-      <SocialMediaContainer>
-        {Object.keys(data.social.frontmatter.links).map(key => (
-          <SocialMediaIcon
-            href={data.social.frontmatter.links[key].url}
-            alt={data.social.frontmatter.links[key].title}
-          >
-            <i
-              className={data.social.frontmatter.links[key].icon}
-              style={{ color: data.social.frontmatter.links[key].color }}
-            />
-          </SocialMediaIcon>
-        ))}
-      </SocialMediaContainer>
-    </PageContainer>
+    <Layout>
+      <PageContainer>
+        <PageTitle>{post.frontmatter.title}</PageTitle>
+        <PageText dangerouslySetInnerHTML={{ __html: post.html }} />
+        <SocialMediaContainer>
+          {Object.keys(data.social.frontmatter.links).map(key => (
+            <SocialMediaIcon
+              href={data.social.frontmatter.links[key].url}
+              alt={data.social.frontmatter.links[key].title}
+            >
+              <i
+                className={data.social.frontmatter.links[key].icon}
+                style={{ color: data.social.frontmatter.links[key].color }}
+              />
+            </SocialMediaIcon>
+          ))}
+        </SocialMediaContainer>
+      </PageContainer>
+    </Layout>
   )
 }
 

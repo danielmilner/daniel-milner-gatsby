@@ -2,6 +2,7 @@ import React from 'react'
 import PageTitle from '../components/PageTitle'
 import PageContainer from '../components/PageContainer'
 import PageText from '../components/PageText'
+import Layout from '../components/Layout'
 
 require('prismjs/themes/prism-tomorrow.css')
 
@@ -10,10 +11,12 @@ export default function Template({
 }) {
   const { markdownRemark: post } = data // data.markdownRemark holds our post data
   return (
-    <PageContainer>
-      <PageTitle>{post.frontmatter.title}</PageTitle>
-      <PageText dangerouslySetInnerHTML={{ __html: post.html }} />
-    </PageContainer>
+    <Layout>
+      <PageContainer>
+        <PageTitle>{post.frontmatter.title}</PageTitle>
+        <PageText dangerouslySetInnerHTML={{ __html: post.html }} />
+      </PageContainer>
+    </Layout>
   )
 }
 

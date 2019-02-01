@@ -1,4 +1,5 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 import PageTitle from '../components/PageTitle'
 import PageContainer from '../components/PageContainer'
 import PageText from '../components/PageText'

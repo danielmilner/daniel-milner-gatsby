@@ -11,11 +11,12 @@ const HeaderContainer = styled.div`
   grid-gap: 3rem;
   padding: 2rem 3rem;
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
-  background: linear-gradient(rgba(56,86,135,0.7), rgba(56,86,135,0.7)), url(./assets/header-bg.png);
+  background: linear-gradient(rgba(56, 86, 135, 0.7), rgba(56, 86, 135, 0.7)),
+    url(./assets/header-bg.png);
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     grid-template-columns: 6rem 1fr;
-    grid-template-areas 'logo site-name';
+    grid-template-areas: 'logo site-name';
     grid-gap: 2rem;
     padding: 2rem;
     clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);

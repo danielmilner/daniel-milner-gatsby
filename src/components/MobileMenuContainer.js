@@ -74,6 +74,7 @@ class MobileMenuContainer extends Component {
   }
 
   render() {
+    const { pages, children } = this.props
     return (
       <div>
         <MobileMenuButton onClick={this.handleMouseDown} />
@@ -82,17 +83,16 @@ class MobileMenuContainer extends Component {
           onClick={this.handleMouseDown}
         >
           <Menu>
-            {Object.keys(this.props.pages).map(key => (
+            {pages.map(({ node }) => (
               <MenuItem
-                key={key}
-                to={this.props.pages[key].page}
-                title={this.props.pages[key].title}
-                icon={this.props.pages[key].icon}
+                to={node.page.value.slug.value}
+                title={node.title.value}
+                icon={node.icon.value}
               />
             ))}
           </Menu>
         </MobileMenu>
-        {this.props.children}
+        {children}
       </div>
     )
   }

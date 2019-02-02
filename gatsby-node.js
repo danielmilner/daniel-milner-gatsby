@@ -8,8 +8,8 @@
 
 const path = require('path')
 
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   const pageTemplate = path.resolve(`src/templates/page.js`)
   const projectTemplate = path.resolve(`src/templates/project.js`)
@@ -17,16 +17,24 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 
   return graphql(`
     {
-      allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/^(?=.*/cms/pages)/gm" } }
-        sort: { order: DESC, fields: [frontmatter___date] }
-        limit: 1000
-      ) {
+      allCockpitPages {
         edges {
           node {
-            frontmatter {
-              path
-              layout
+            title {
+              value
+            }
+            slug {
+              value
+            }
+            template {
+              value
+            }
+            content {
+              value {
+                childMarkdownRemark {
+                  html
+                }
+              }
             }
           }
         }
@@ -37,20 +45,22 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
       return Promise.reject(result.errors)
     }
     let layoutComponent = pageTemplate
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    result.data.allCockpitPages.edges.forEach(({ node }) => {
       layoutComponent = pageTemplate
-      switch (node.frontmatter.layout) {
-        case 'projects':
+      switch (node.template.value) {
+        case 'Projects':
           layoutComponent = projectTemplate
           break
-        case 'contact':
+        case 'Contact':
           layoutComponent = contactTemplate
           break
       }
       createPage({
-        path: node.frontmatter.path,
+        path: node.slug.value,
         component: layoutComponent,
-        context: {}, // additional data can be passed via context
+        context: {
+          slug: node.slug.value,
+        }, // additional data can be passed via context
       })
     })
   })

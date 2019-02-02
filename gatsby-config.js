@@ -7,40 +7,20 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-catch-links`,
-    `gatsby-plugin-netlify-cms`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/src/pages`,
-        name: 'pages',
+        name: `src`,
+        path: `${__dirname}/src/`,
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `@fika/gatsby-source-cockpit`,
       options: {
-        path: `${__dirname}/src/cms/pages`,
-        name: 'cms-pages',
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/cms/blog`,
-        name: 'blog',
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/cms/projects`,
-        name: 'projects',
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/src/cms/settings`,
-        name: 'settings',
+        token: `6ac3bdf838484acebba54f65a729bc`,
+        baseUrl: `http://cms.danielmilner.com`,
+        locales: ['en'],
+        collections: null,
       },
     },
     {

@@ -144,12 +144,11 @@ const Header = ({ siteTitle, pages, handleMobileMenu }) => (
     <Avatar to="/" src={daniel} alt={siteTitle} />
     <SiteName to="/" />
     <Menu>
-      {Object.keys(pages).map(key => (
+      {pages.map(({ node }) => (
         <MenuItem
-          key={key}
-          to={pages[key].page}
-          title={pages[key].title}
-          icon={pages[key].icon}
+          to={node.page.value.slug.value}
+          title={node.title.value}
+          icon={node.icon.value}
         />
       ))}
     </Menu>

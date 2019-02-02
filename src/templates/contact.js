@@ -20,21 +20,24 @@ const SocialMediaIcon = styled.a`
 export default function Template({
   data, // this prop will be injected by the GraphQL query we'll write in a bit
 }) {
-  const { markdownRemark: post } = data // data.markdownRemark holds our post data
+  const { title, content } = data.cockpitPages
+  const pageTitle = title.value
+  const pageHtml = content.value.childMarkdownRemark.html
   return (
     <Layout>
       <PageContainer>
-        <PageTitle>{post.frontmatter.title}</PageTitle>
-        <PageText dangerouslySetInnerHTML={{ __html: post.html }} />
+        <PageTitle>{pageTitle}</PageTitle>
+        <PageText
+          dangerouslySetInnerHTML={{
+            __html: pageHtml,
+          }}
+        />
         <SocialMediaContainer>
-          {Object.keys(data.social.frontmatter.links).map(key => (
-            <SocialMediaIcon
-              href={data.social.frontmatter.links[key].url}
-              alt={data.social.frontmatter.links[key].title}
-            >
+          {data.social.edges.map(({ node }) => (
+            <SocialMediaIcon href={node.url.value} alt={node.title.value}>
               <i
-                className={data.social.frontmatter.links[key].icon}
-                style={{ color: data.social.frontmatter.links[key].color }}
+                className={node.icon.value}
+                style={{ color: node.color.value }}
               />
             </SocialMediaIcon>
           ))}
@@ -45,30 +48,35 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query ContactByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        path
-        title
+  query contactPage($slug: String!) {
+    cockpitPages(slug: { value: { eq: $slug } }) {
+      title {
+        value
       }
-    }
-    social: markdownRemark(
-      fileAbsolutePath: { regex: "/^(?=.*/cms/settings/social-media).*/gm" }
-    ) {
-      frontmatter {
-        links {
-          color
-          icon
-          title
-          url
+      content {
+        value {
+          childMarkdownRemark {
+            html
+          }
         }
       }
     }
-    site {
-      siteMetadata {
-        title
+    social: allCockpitSocialMedia {
+      edges {
+        node {
+          title {
+            value
+          }
+          url {
+            value
+          }
+          icon {
+            value
+          }
+          color {
+            value
+          }
+        }
       }
     }
   }

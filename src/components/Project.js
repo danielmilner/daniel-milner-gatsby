@@ -53,12 +53,11 @@ const ProjectTechBadge = styled.div`
 
 const Project = props => (
   <ProjectContainer>
-    {(props.link &&
-      props.link !== '' && (
-        <ProjectLink href={props.link}>
-          <i className="fas fa-external-link-alt" />
-        </ProjectLink>
-      )) ||
+    {(props.link && props.link !== '' && (
+      <ProjectLink href={props.link}>
+        <i className="fas fa-external-link-alt" />
+      </ProjectLink>
+    )) ||
       null}
     <ProjectName>{props.name}</ProjectName>
     <ProjectDesc dangerouslySetInnerHTML={{ __html: props.desc }} />
@@ -66,10 +65,10 @@ const Project = props => (
       {Object.keys(props.tech).map(key => (
         <ProjectTechBadge>
           <i
-            className={props.tech[key].icon}
-            style={{ color: props.tech[key].color }}
+            className={props.tech[key].value.icon.value}
+            style={{ color: props.tech[key].value.color.value }}
           />{' '}
-          {props.tech[key].name}
+          {props.tech[key].value.title.value}
         </ProjectTechBadge>
       ))}
     </ProjectTechContainer>

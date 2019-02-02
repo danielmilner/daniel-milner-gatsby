@@ -28,14 +28,22 @@ const Layout = ({ children }) => (
             title
           }
         }
-        primary_nav: markdownRemark(
-          fileAbsolutePath: { regex: "/^(?=.*/cms/settings/navigation).*/gm" }
-        ) {
-          frontmatter {
-            primary_nav {
-              page
-              title
-              icon
+        primary_nav: allCockpitNavigation {
+          edges {
+            node {
+              title {
+                value
+              }
+              icon {
+                value
+              }
+              page {
+                value {
+                  slug {
+                    value
+                  }
+                }
+              }
             }
           }
         }
@@ -43,7 +51,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <ThemeProvider theme={theme}>
-        <MobileMenuContainer pages={data.primary_nav.frontmatter.primary_nav}>
+        <MobileMenuContainer pages={data.primary_nav.edges}>
           <Helmet
             title={data.site.siteMetadata.title}
             meta={[
@@ -63,7 +71,7 @@ const Layout = ({ children }) => (
           </Helmet>
           <Header
             siteTitle={data.site.siteMetadata.title}
-            pages={data.primary_nav.frontmatter.primary_nav}
+            pages={data.primary_nav.edges}
           />
           <SiteContent className="site-content">{children}</SiteContent>
           <Footer />
@@ -78,24 +86,3 @@ Layout.propTypes = {
 }
 
 export default Layout
-
-// export const query = graphql`
-//   query SiteTitleQuery {
-//     site {
-//       siteMetadata {
-//         title
-//       }
-//     }
-//     primary_nav: markdownRemark(
-//       fileAbsolutePath: { regex: "/^(?=.*/cms/settings/navigation).*/gm" }
-//     ) {
-//       frontmatter {
-//         primary_nav {
-//           page
-//           title
-//           icon
-//         }
-//       }
-//     }
-//   }
-// `

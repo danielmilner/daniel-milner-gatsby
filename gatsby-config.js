@@ -19,7 +19,7 @@ module.exports = {
       options: {
         token: `6ac3bdf838484acebba54f65a729bc`,
         baseUrl: `http://cms.danielmilner.com`,
-        locales: ['en'],
+        locales: [],
         collections: null,
       },
     },

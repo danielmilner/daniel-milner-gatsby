@@ -4,7 +4,7 @@ const theme = {
   darkColor: '#222222',
   textSize: '1.8rem',
   serifFont: 'Merriweather',
-  sanSerifFont: 'Ubuntu',
+  sanSerifFont: 'Assistant',
   desktopWidth: '960px',
   tabletWidth: '768px',
   phoneWidth: '576px',

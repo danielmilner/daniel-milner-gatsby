@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
 const PageText = styled.div`
-  font-family: ${props => props.theme.serifFont};
+  font-family: ${props => props.theme.sanSerifFont};
   font-size: ${props => props.theme.textSize};
   color: ${props => props.theme.textColor};
   font-weight: 300;
-  line-height: 3.5rem;
+  line-height: 2.8rem;
   font-size: 1.7rem;
 
   hr {

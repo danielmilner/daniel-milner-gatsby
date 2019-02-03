@@ -6,7 +6,7 @@ const MobileButton = styled.a`
   top: 2rem;
   right: 1rem;
   font-size: 3rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: ${props => props.theme.colorDark};
   padding: 1rem;
   display: inline-block;
   z-index: 1000;
@@ -14,7 +14,7 @@ const MobileButton = styled.a`
 
   &:hover,
   &:active {
-    color: #fff;
+    color: #000;
   }
 
   @media (max-width: ${props => props.theme.tabletWidth}) {

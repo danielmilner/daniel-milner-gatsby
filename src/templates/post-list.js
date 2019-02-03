@@ -1,5 +1,6 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby'
+import styled from 'styled-components'
 import PageContainer from '../components/PageContainer'
 import PageText from '../components/PageText'
 import Layout from '../components/Layout'
@@ -7,15 +8,26 @@ import PostListItem from '../components/PostListItem'
 
 require('prismjs/themes/prism-tomorrow.css')
 
-export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
-}) {
-  const posts = data.allCockpitPosts.edges
-  return (
-    <Layout>
-      <PageContainer>
-        <PageText>
-          <ul>
+const Pagination = styled.div`
+  display: flex;
+`
+
+const PagePrevLink = styled(Link)`
+  text-decoration: none;
+`
+
+const PageNextLink = styled(Link)`
+  margin-left: auto;
+  text-decoration: none;
+`
+
+class PostListTemplate extends React.Component {
+  render() {
+    const posts = this.props.data.allCockpitPosts.edges
+    return (
+      <Layout>
+        <PageContainer>
+          <PageText>
             {posts.map(({ node }) => {
               const { title, slug, excerpt, date } = node
               return (
@@ -28,12 +40,26 @@ export default function Template({
                 </PostListItem>
               )
             })}
-          </ul>
-        </PageText>
-      </PageContainer>
-    </Layout>
-  )
+            <Pagination>
+              {this.props.pageContext.previousPagePath ? (
+                <PagePrevLink to={this.props.pageContext.previousPagePath}>
+                  Previous
+                </PagePrevLink>
+              ) : null}
+              {this.props.pageContext.nextPagePath ? (
+                <PageNextLink to={this.props.pageContext.nextPagePath}>
+                  Next
+                </PageNextLink>
+              ) : null}
+            </Pagination>
+          </PageText>
+        </PageContainer>
+      </Layout>
+    )
+  }
 }
+
+export default PostListTemplate
 
 export const pageQuery = graphql`
   query PostList($skip: Int!, $limit: Int!) {

@@ -7,6 +7,7 @@
     "@fika/gatsby-source-cockpit": "^1.0.13",
     "babel-plugin-styled-components": "^1.10.0",
     "gatsby": "^2.0.111",
+    "gatsby-awesome-pagination": "^0.3.3",
     "gatsby-image": "^2.0.29",
     "gatsby-link": "^2.0.10",
     "gatsby-paginate": "^1.0.17",

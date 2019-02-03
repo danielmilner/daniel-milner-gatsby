@@ -6,6 +6,8 @@
 
 // You can delete this file if you're not using it
 
+const { paginate } = require('gatsby-awesome-pagination')
+
 const path = require('path')
 
 exports.createPages = ({ actions, graphql }) => {
@@ -79,17 +81,12 @@ exports.createPages = ({ actions, graphql }) => {
       })
     })
 
-    const postsPerPage = 10
-    const numPages = Math.ceil(result.data.posts.edges.length / postsPerPage)
-    Array.from({ length: numPages }).forEach((_, i) => {
-      createPage({
-        path: i === 0 ? `/blog` : `/blog/${i + 1}`,
-        component: postListTemplate,
-        context: {
-          limit: postsPerPage,
-          skip: i * postsPerPage,
-        },
-      })
+    paginate({
+      createPage, // The Gatsby `createPage` function
+      items: result.data.posts.edges, // An array of objects
+      itemsPerPage: 10, // How many items you want per page
+      pathPrefix: '/blog', // Creates pages like `/blog`, `/blog/2`, etc
+      component: postListTemplate, // Just like `createPage()`
     })
   })
 }

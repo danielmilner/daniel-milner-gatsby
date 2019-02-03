@@ -23,7 +23,7 @@ const ProjectName = styled.div`
 `
 
 const ProjectDesc = styled.div`
-  font-family: ${props => props.theme.serifFont};
+  font-family: ${props => props.theme.sanSerifFont};
   font-size: 1.6rem;
   font-weight: normal;
   line-height: 2.8rem;

@@ -33,13 +33,13 @@ const SiteNameLink = styled(Link)`
   margin-right: 4rem;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
-    display: none;
+    /* display: none; */
   }
 `
 
 const SiteNameText = styled.div`
   font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 700;
+  font-weight: 800;
   font-size: 3.5rem;
   color: ${props => props.theme.darkColor};
   text-transform: none;

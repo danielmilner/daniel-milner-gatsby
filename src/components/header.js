@@ -10,16 +10,12 @@ const HeaderContainer = styled.div`
   grid-template-areas: 'logo site-name menu';
   grid-gap: 3rem;
   padding: 2rem 3rem;
-  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
-  background: linear-gradient(rgba(56, 86, 135, 0.7), rgba(56, 86, 135, 0.7)),
-    url(./assets/header-bg.png);
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     grid-template-columns: 6rem 1fr;
     grid-template-areas: 'logo site-name';
     grid-gap: 2rem;
     padding: 2rem;
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
   }
 `
 
@@ -27,13 +23,7 @@ const AvatarImage = styled.img`
   width: 100%;
   height: auto;
   border-radius: 50%;
-  filter: hue-rotate(220deg);
   border: 3px solid white;
-
-  &:hover,
-  &:active {
-    filter: hue-rotate(0deg);
-  }
 `
 
 const SiteNameLink = styled(Link)`
@@ -43,7 +33,7 @@ const SiteNameLink = styled(Link)`
   margin-right: 4rem;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
-    // display: none;
+    display: none;
   }
 `
 
@@ -51,7 +41,7 @@ const SiteNameText = styled.div`
   font-family: ${props => props.theme.sanSerifFont};
   font-weight: 700;
   font-size: 3.5rem;
-  color: #fff;
+  color: ${props => props.theme.darkColor};
   text-transform: none;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
@@ -63,7 +53,7 @@ const SiteNameDesc = styled.div`
   font-family: ${props => props.theme.sanSerifFont};
   font-weight: 700;
   font-size: 1.5rem;
-  color: #fff;
+  color: ${props => props.theme.primaryColor};
   text-transform: none;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
@@ -75,7 +65,7 @@ const Menu = styled.ul`
   grid-area: menu;
   align-self: center;
   justify-self: end;
-  margin: -2rem 0 0 0;
+  margin: 0;
   padding: 0;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
@@ -94,17 +84,16 @@ const AvatarLink = styled(Link)`
 
 const MenuLink = styled(Link)`
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.8);
+  color: ${props => props.theme.textColor};
   font-size: 1.5rem;
   font-family: ${props => props.theme.sanSerifFont};
   font-weight: 400;
-  // text-transform: uppercase;
-  padding: 1.5rem;
+  padding: 1rem;
   margin: 0 0.5rem;
 
   &:hover,
   &:active {
-    color: #fff;
+    color: ${props => props.theme.primaryColor};
   }
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
@@ -114,7 +103,7 @@ const MenuLink = styled(Link)`
 `
 
 const MenuIcon = styled.i`
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-right: 0.5rem;
   vertical-align: text-bottom;
 `
@@ -147,7 +136,7 @@ const Header = ({ siteTitle, pages, handleMobileMenu }) => (
     <Menu>
       {pages.map(({ node }) => (
         <MenuItem
-          to={node.page.value.slug.value}
+          to={node.page.value}
           title={node.title.value}
           icon={node.icon.value}
         />

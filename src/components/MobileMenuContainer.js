@@ -85,7 +85,7 @@ class MobileMenuContainer extends Component {
           <Menu>
             {pages.map(({ node }) => (
               <MenuItem
-                to={node.page.value.slug.value}
+                to={node.page.value}
                 title={node.title.value}
                 icon={node.icon.value}
               />

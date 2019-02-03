@@ -1,6 +1,7 @@
 const theme = {
   primaryColor: 'rgb(80, 124, 196)',
   textColor: '#999999',
+  darkColor: '#222222',
   textSize: '1.8rem',
   serifFont: 'Merriweather',
   sanSerifFont: 'Ubuntu',

@@ -10,7 +10,7 @@ require('prismjs/themes/prism-tomorrow.css')
 export default function Template({
   data, // this prop will be injected by the GraphQL query we'll write in a bit
 }) {
-  const { title, content } = data.cockpitPages
+  const { title, content } = data.cockpitPosts
   const pageTitle = title.value
   const pageHtml = content.value.childMarkdownRemark.html
   return (
@@ -28,8 +28,8 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query Page($cockpitId: String!) {
-    cockpitPages(cockpitId: { eq: $cockpitId }) {
+  query Post($cockpitId: String!) {
+    cockpitPosts(cockpitId: { eq: $cockpitId }) {
       title {
         value
       }

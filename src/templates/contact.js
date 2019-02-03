@@ -48,8 +48,8 @@ export default function Template({
 }
 
 export const pageQuery = graphql`
-  query contactPage($slug: String!) {
-    cockpitPages(slug: { value: { eq: $slug } }) {
+  query contactPage($cockpitId: String!) {
+    cockpitPages(cockpitId: { eq: $cockpitId }) {
       title {
         value
       }

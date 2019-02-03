@@ -67,6 +67,7 @@ export const pageQuery = graphql`
       skip: $skip
       limit: $limit
       sort: { fields: [date___value], order: DESC }
+      filter: { published: { value: { eq: true } } }
     ) {
       edges {
         node {

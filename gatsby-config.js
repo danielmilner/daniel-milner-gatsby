@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Daniel Milner',
-    siteUrl: 'https://danielmilner.com/',
+    siteUrl: 'https://danielmilner.com',
     description: 'Full Stack Web Developer',
     banner: '',
     siteLanguage: 'en',

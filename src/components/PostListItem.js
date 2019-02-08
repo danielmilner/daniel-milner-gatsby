@@ -16,6 +16,14 @@ const PostImage = styled(Image)`
   position: relative;
   width: 100%;
   height: 15vw;
+  @media (max-width: ${props =>
+      props.theme.tabletWidth}) and (orientation: portrait) {
+    height: 40vw;
+  }
+  @media (max-width: ${props =>
+      props.theme.tabletWidth}) and (orientation: landscape) {
+    height: 20vw;
+  }
   & > img {
     position: absolute;
     top: 0;
@@ -43,7 +51,6 @@ const Meta = styled.div`
 
 const MetaItem = styled.div`
   font-family: ${props => props.theme.fontFamily};
-  /* text-transform: uppercase; */
   font-size: 1.5rem;
   font-weight: 400;
   color: ${props => props.theme.textColor};

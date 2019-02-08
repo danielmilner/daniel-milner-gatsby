@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import PageHeader from '../components/PageHeader'
 import Project from '../components/Project'
 import Layout from '../components/Layout'
+import SEO from '../components/seo/SEO'
 
 require('prismjs/themes/prism-tomorrow.css')
 
@@ -26,6 +27,12 @@ export default function Template({
   const { image, heading_title } = data.cockpitPages
   return (
     <Layout location={location}>
+      <SEO
+        title={`Projects`}
+        pathname={location.pathname}
+        desc={`Here are some of the projects that I've worked on.`}
+        banner={image.value.banner.fixed.src}
+      />
       <PageHeader
         image={image.value.childImageSharp.fluid}
         title={heading_title.value}
@@ -55,6 +62,11 @@ export const pageQuery = graphql`
           childImageSharp {
             fluid(maxWidth: 1900) {
               ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+          banner: childImageSharp {
+            fixed(width: 1280, height: 720) {
+              src
             }
           }
         }

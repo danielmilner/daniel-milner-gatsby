@@ -4,6 +4,10 @@ import styled from 'styled-components'
 import Image from 'gatsby-image'
 import GridItem from './GridItem'
 
+const PostLink = styled(Link)`
+  text-decoration: none;
+`
+
 const Inner = styled.div`
   padding: 2rem;
 `
@@ -11,7 +15,7 @@ const Inner = styled.div`
 const PostImage = styled(Image)`
   position: relative;
   width: 100%;
-  padding-top: 2%;
+  height: 15vw;
   & > img {
     position: absolute;
     top: 0;
@@ -23,19 +27,13 @@ const PostImage = styled(Image)`
   }
 `
 
-const Title = styled(Link)`
+const Title = styled.div`
   font-family: 'Playfair Display';
   font-size: 2.8rem;
   font-weight: 700;
   line-height: 3.2rem;
   margin-bottom: 1.5rem;
   color: ${props => props.theme.primaryColor};
-  text-decoration: none;
-
-  &:hover,
-  &:active {
-    text-decoration: underline;
-  }
 `
 
 const Meta = styled.div`
@@ -72,20 +70,22 @@ const Tag = styled.div`
 
 const PostListItem = props => (
   <GridItem padding={'0'}>
-    <PostImage fluid={props.image.childImageSharp.fluid} />
-    <Inner>
-      <Meta>
-        <MetaItem>{props.date}</MetaItem>
-      </Meta>
-      <Title to={props.link}>{props.title}</Title>
-      {props.tags !== undefined && (
-        <Tags>
-          {props.tags.map(tag => {
-            return <Tag>{tag}</Tag>
-          })}
-        </Tags>
-      )}
-    </Inner>
+    <PostLink to={props.link}>
+      <PostImage fluid={props.image.childImageSharp.fluid} />
+      <Inner>
+        <Meta>
+          <MetaItem>{props.date}</MetaItem>
+        </Meta>
+        <Title>{props.title}</Title>
+        {props.tags !== undefined && (
+          <Tags>
+            {props.tags.map(tag => {
+              return <Tag>{tag}</Tag>
+            })}
+          </Tags>
+        )}
+      </Inner>
+    </PostLink>
   </GridItem>
 )
 

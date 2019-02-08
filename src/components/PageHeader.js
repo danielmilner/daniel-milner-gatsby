@@ -6,7 +6,7 @@ const Container = styled.div`
   padding: 0;
   margin: 0;
   width: 100%;
-  height: 45vw;
+  height: ${props => (props.height ? props.height : '45vw')};
   position: relative;
   ${props =>
     props.title &&
@@ -57,7 +57,7 @@ const Title = styled.div`
 export default class PageHeader extends Component {
   render() {
     return (
-      <Container title={this.props.title}>
+      <Container title={this.props.title} height={this.props.height}>
         <BgImage fluid={this.props.image} />
         {this.props.title !== 'false' && (
           <Title

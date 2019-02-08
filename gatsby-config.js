@@ -1,6 +1,13 @@
 module.exports = {
   siteMetadata: {
     title: 'Daniel Milner',
+    siteUrl: 'https://danielmilner.com/',
+    description: 'Full Stack Web Developer',
+    banner: '',
+    siteLanguage: 'en',
+    ogLanguage: 'en_US',
+    twitter: '@danielmilner', // Twitter Username
+    facebook: 'Daniel Milner', // Facebook Site Name
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

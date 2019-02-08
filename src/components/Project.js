@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const ProjectContainer = styled.div`
+const ProjectContainer = styled.a`
   margin: 0;
   padding: 2rem;
   display: flex;
@@ -9,16 +9,12 @@ const ProjectContainer = styled.div`
   justify-content: flex-start;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
   transition: all 0.5s;
+  text-decoration: none;
   &:hover,
   &:active,
   &:focus {
     box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.2);
   }
-`
-
-const ProjectLink = styled.a`
-  color: ${props => props.theme.primaryColor};
-  text-decoration: none;
 `
 
 const ProjectName = styled.div`
@@ -69,12 +65,8 @@ const ProjectTechBadge = styled.div`
 `
 
 const Project = props => (
-  <ProjectContainer>
-    {(props.link && props.link !== '' && (
-      <ProjectLink href={props.link}>
-        <ProjectName>{props.name}</ProjectName>
-      </ProjectLink>
-    )) || <ProjectName>{props.name}</ProjectName>}
+  <ProjectContainer href={props.link}>
+    <ProjectName>{props.name}</ProjectName>
     <ProjectDesc dangerouslySetInnerHTML={{ __html: props.desc }} />
     <ProjectTechContainer>
       {Object.keys(props.tech).map(key => (

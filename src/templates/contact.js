@@ -6,6 +6,7 @@ import PageContainer from '../components/PageContainer'
 import PageText from '../components/PageText'
 import styled from 'styled-components'
 import Layout from '../components/Layout'
+import SEO from '../components/seo/SEO'
 
 require('prismjs/themes/prism-tomorrow.css')
 
@@ -28,6 +29,12 @@ export default function Template({
   const pageHtml = content.value.childMarkdownRemark.html
   return (
     <Layout location={location}>
+      <SEO
+        title={pageTitle}
+        pathname={location.pathname}
+        desc={content.value.childMarkdownRemark.excerpt}
+        banner={image.value.banner.fixed.src}
+      />
       <PageHeader
         image={image.value.childImageSharp.fluid}
         title={heading_title.value}
@@ -64,6 +71,7 @@ export const pageQuery = graphql`
         value {
           childMarkdownRemark {
             html
+            excerpt
           }
         }
       }
@@ -75,6 +83,11 @@ export const pageQuery = graphql`
           childImageSharp {
             fluid(maxWidth: 1900) {
               ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+          banner: childImageSharp {
+            fixed(width: 1280, height: 720) {
+              src
             }
           }
         }

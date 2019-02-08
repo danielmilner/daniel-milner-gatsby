@@ -5,6 +5,7 @@ import PageHeader from '../components/PageHeader'
 import Layout from '../components/Layout'
 import GridContainer from '../components/GridContainer'
 import PostListItem from '../components/PostListItem'
+import SEO from '../components/seo/SEO'
 
 require('prismjs/themes/prism-tomorrow.css')
 
@@ -26,13 +27,19 @@ class PostListTemplate extends React.Component {
     const posts = this.props.data.allCockpitPosts.edges
     return (
       <Layout location={this.props.location}>
+        <SEO
+          title={`Blog`}
+          pathname={this.props.location.pathname}
+          desc={`Daniel Milner's blog posts.`}
+          banner={this.props.data.HeaderImage.banner.fixed.src}
+        />
         <PageHeader
           image={this.props.data.HeaderImage.childImageSharp.fluid}
           title={`Blog Posts`}
         />
         <GridContainer>
           {posts.map(({ node }) => {
-            const { title, slug, excerpt, date, image, tags } = node
+            const { title, slug, date, image, tags } = node
             return (
               <PostListItem
                 title={title.value}
@@ -40,9 +47,7 @@ class PostListTemplate extends React.Component {
                 date={date.value}
                 image={image.value}
                 tags={tags.value}
-              >
-                {excerpt.value}
-              </PostListItem>
+              />
             )
           })}
         </GridContainer>
@@ -81,9 +86,6 @@ export const pageQuery = graphql`
           slug {
             value
           }
-          excerpt {
-            value
-          }
           date {
             value(formatString: "MMMM Do, YYYY")
           }
@@ -106,6 +108,11 @@ export const pageQuery = graphql`
       childImageSharp {
         fluid(maxWidth: 1900) {
           ...GatsbyImageSharpFluid
+        }
+      }
+      banner: childImageSharp {
+        fixed(width: 1280, height: 720) {
+          src
         }
       }
     }

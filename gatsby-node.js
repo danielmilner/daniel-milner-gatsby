@@ -68,7 +68,7 @@ exports.createPages = ({ actions, graphql }) => {
           break
       }
       createPage({
-        path: node.slug.value,
+        path: `/${node.slug ? node.slug.value : ''}`,
         component: layoutComponent,
         context: {
           cockpitId: node.cockpitId,
@@ -77,7 +77,7 @@ exports.createPages = ({ actions, graphql }) => {
     })
     result.data.posts.edges.forEach(({ node }) => {
       createPage({
-        path: node.slug.value,
+        path: `/${node.slug.value}`,
         component: postTemplate,
         context: {
           cockpitId: node.cockpitId,

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import PageHeader from '../components/PageHeader'
 import Layout from '../components/Layout'
 import DevIcons from '../components/DevIcons'
+import SEO from '../components/seo/SEO'
 
 require('prismjs/themes/prism-tomorrow.css')
 
@@ -71,6 +72,12 @@ export default function Template({
   const pageHtml = content.value.childMarkdownRemark.html
   return (
     <Layout location={location}>
+      <SEO
+        title={`Daniel Milner`}
+        pathname={location.pathname}
+        desc={content.value.childMarkdownRemark.excerpt}
+        banner={image.value.banner.fixed.src}
+      />
       <PageHeader
         image={image.value.childImageSharp.fluid}
         title={heading_title.value}
@@ -94,6 +101,7 @@ export const pageQuery = graphql`
         value {
           childMarkdownRemark {
             html
+            excerpt
           }
         }
       }
@@ -105,6 +113,11 @@ export const pageQuery = graphql`
           childImageSharp {
             fluid(maxWidth: 1900) {
               ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+          banner: childImageSharp {
+            fixed(width: 1280, height: 720) {
+              src
             }
           }
         }

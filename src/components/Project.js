@@ -2,42 +2,59 @@ import React from 'react'
 import styled from 'styled-components'
 
 const ProjectContainer = styled.div`
-  margin: 7rem 0;
+  margin: 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  transition: all 0.5s;
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.2);
+  }
 `
 
 const ProjectLink = styled.a`
-  float: right;
-  display: block;
   color: ${props => props.theme.primaryColor};
-  font-size: 1.8rem;
   text-decoration: none;
 `
 
 const ProjectName = styled.div`
-  font-family: ${props => props.theme.sanSerifFont};
-  font-size: 2.4rem;
-  font-weight: bold;
-  line-height: 2.4rem;
+  font-family: 'Playfair Display';
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 3.2rem;
   margin-bottom: 1.5rem;
-  color: #000;
+  color: ${props => props.theme.primaryColor};
+  /* text-transform: uppercase; */
 `
 
 const ProjectDesc = styled.div`
-  font-family: ${props => props.theme.sanSerifFont};
+  font-family: ${props => props.theme.fontFamily};
   font-size: 1.6rem;
-  font-weight: normal;
+  font-weight: 300;
   line-height: 2.8rem;
   color: ${props => props.theme.textColor};
+
+  a {
+    color: ${props => props.theme.primaryColor};
+    text-decoration: none;
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+  }
 `
 
 const ProjectTechContainer = styled.div`
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 2rem;
 `
 
 const ProjectTechBadge = styled.div`
-  background-color: #efeded;
-  border-radius: 0.5rem;
-  padding: 0.3rem 0.7rem;
   font-size: 1rem;
   font-family: ${props => props.theme.sanSerifFont};
   text-transform: uppercase;
@@ -55,11 +72,9 @@ const Project = props => (
   <ProjectContainer>
     {(props.link && props.link !== '' && (
       <ProjectLink href={props.link}>
-        <i className="fas fa-external-link-alt" />
+        <ProjectName>{props.name}</ProjectName>
       </ProjectLink>
-    )) ||
-      null}
-    <ProjectName>{props.name}</ProjectName>
+    )) || <ProjectName>{props.name}</ProjectName>}
     <ProjectDesc dangerouslySetInnerHTML={{ __html: props.desc }} />
     <ProjectTechContainer>
       {Object.keys(props.tech).map(key => (

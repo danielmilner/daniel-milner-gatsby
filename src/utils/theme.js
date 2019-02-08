@@ -1,14 +1,16 @@
 const theme = {
-  primaryColor: 'rgb(80, 124, 196)',
-  textColor: '#999999',
-  darkColor: '#222222',
-  textSize: '1.8rem',
-  serifFont: 'Merriweather',
-  sanSerifFont: 'Assistant',
+  primaryColor: '#8B388C',
+  textColor: '#222222',
+  altTextColor: '#919191',
+  bgColor: '#ffffff',
+  altBgColor: '#f2f2f2',
+  textSize: '2rem',
+  fontFamily: 'Assistant',
+  serifFont: 'Playfair Display',
   desktopWidth: '960px',
   tabletWidth: '768px',
   phoneWidth: '576px',
-  contentMaxWidth: '70rem',
+  contentMaxWidth: '85rem',
 }
 
 export default theme

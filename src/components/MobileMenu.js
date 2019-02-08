@@ -5,8 +5,8 @@ const MobileMenuInner = styled.div`
   //   padding: 3rem;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(56, 86, 135, 0.9);
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: ${props => props.theme.textColor};
   position: fixed;
   top: 0;
   left: 0;

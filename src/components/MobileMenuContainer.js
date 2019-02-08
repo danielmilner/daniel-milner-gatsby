@@ -3,13 +3,14 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import MobileMenuButton from '../components/MobileMenuButton'
 import MobileMenu from '../components/MobileMenu'
+import { darken } from 'polished'
 
 const Menu = styled.ul`
   padding: 2rem;
   margin: 0;
   display: grid;
   grid-gap: 4rem;
-  justify-content: start;
+  justify-content: center;
   align-content: center;
   height: 100vh;
 `
@@ -17,36 +18,42 @@ const Menu = styled.ul`
 const MenuItemContainer = styled.li`
   padding: 0;
   display: block;
+  text-align: center;
 `
 
 const MenuLink = styled(Link)`
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.8);
+  color: ${props =>
+    props.button === 'true'
+      ? '#fff'
+      : props.active === 'true'
+      ? props.theme.primaryColor
+      : props.theme.textColor};
   font-size: 2.5rem;
-  font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 400;
-  // text-transform: uppercase;
-  padding: 1.5rem;
-  margin: 0 0.5rem;
+  font-family: ${props => props.theme.fontFamily};
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  margin: 0;
+  border-radius: 0.4rem;
+  display: block;
+  background-color: ${props =>
+    props.button === 'true' ? props.theme.primaryColor : 'transparent'};
 
   &:hover,
   &:active {
-    color: #fff;
+    background-color: ${props =>
+      props.button === 'true'
+        ? darken(0.1, props.theme.primaryColor)
+        : 'transparent'};
+    color: ${props =>
+      props.button === 'true' ? '#ffffff' : props.theme.primaryColor};
   }
-`
-
-const MenuIcon = styled.i`
-  font-size: 3.5rem;
-  margin-right: 1rem;
-  width: 4rem;
-  vertical-align: middle;
-  text-align: center;
 `
 
 const MenuItem = props => (
   <MenuItemContainer>
-    <MenuLink to={props.to}>
-      <MenuIcon className={props.icon} /> {props.title}
+    <MenuLink to={props.to} active={props.active} button={props.button}>
+      {props.title}
     </MenuLink>
   </MenuItemContainer>
 )
@@ -83,11 +90,17 @@ class MobileMenuContainer extends Component {
           onClick={this.handleMouseDown}
         >
           <Menu>
-            {pages.map(({ node }) => (
+            {pages.map(({ node }, index) => (
               <MenuItem
+                key={index}
                 to={node.page.value}
                 title={node.title.value}
-                icon={node.icon.value}
+                active={
+                  this.props.location.pathname === node.page.value
+                    ? 'true'
+                    : 'false'
+                }
+                button={node.button ? 'true' : 'false'}
               />
             ))}
           </Menu>

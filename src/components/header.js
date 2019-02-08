@@ -1,99 +1,87 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
-import daniel from '../images/daniel.jpg'
+import { darken } from 'polished'
 
 const HeaderContainer = styled.div`
-  margin-bottom: 1.45rem;
   display: grid;
-  grid-template-columns: 8rem 2fr 3fr;
-  grid-template-areas: 'logo site-name menu';
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: 'site-name menu';
   grid-gap: 3rem;
-  padding: 2rem 3rem;
+  padding: 2.5rem 3rem;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
-    grid-template-columns: 6rem 1fr;
-    grid-template-areas: 'logo site-name';
+    grid-template-columns: 1fr;
+    grid-template-areas: 'site-name';
     grid-gap: 2rem;
     padding: 2rem;
   }
 `
 
-const AvatarImage = styled.img`
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-  border: 3px solid white;
-`
-
 const SiteNameLink = styled(Link)`
   grid-area: site-name;
   align-self: center;
+  font-family: ${props => props.theme.fontFamily};
+  font-size: 3.2rem;
+  color: ${props => props.theme.textColor};
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
   text-decoration: none;
   margin-right: 4rem;
-
-  @media (max-width: ${props => props.theme.tabletWidth}) {
-    /* display: none; */
-  }
-`
-
-const SiteNameText = styled.div`
-  font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 800;
-  font-size: 3.5rem;
-  color: ${props => props.theme.darkColor};
-  text-transform: none;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     font-size: 2.2rem;
   }
 `
 
-const SiteNameDesc = styled.div`
-  font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: ${props => props.theme.primaryColor};
-  text-transform: none;
-
-  @media (max-width: ${props => props.theme.tabletWidth}) {
-    font-size: 1.2rem;
-  }
+const SiteNameFirst = styled.span`
+  font-weight: 400;
 `
 
-const Menu = styled.ul`
+const SiteNameLast = styled.span`
+  font-weight: 700;
+`
+
+const Menu = styled.div`
   grid-area: menu;
   align-self: center;
   justify-self: end;
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: flex-end;
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
     display: none;
   }
 `
 
-const MenuItemContainer = styled.li`
-  padding: 0;
-  display: inline-block;
-`
-
-const AvatarLink = styled(Link)`
-  grid-area: logo;
-`
-
-const MenuLink = styled(Link)`
+const MenuItem = styled(Link)`
   text-decoration: none;
-  color: ${props => props.theme.textColor};
+  color: ${props =>
+    props.button === 'true'
+      ? '#ffffff'
+      : props.active === 'true'
+      ? props.theme.primaryColor
+      : props.theme.textColor};
   font-size: 1.5rem;
-  font-family: ${props => props.theme.sanSerifFont};
-  font-weight: 400;
-  padding: 1rem;
-  margin: 0 0.5rem;
+  font-family: ${props => props.theme.fontFamily};
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  margin: 0;
+  border-radius: 0.4rem;
+  display: block;
+  background-color: ${props =>
+    props.button === 'true' ? props.theme.primaryColor : 'transparent'};
 
   &:hover,
   &:active {
-    color: ${props => props.theme.primaryColor};
+    background-color: ${props =>
+      props.button === 'true'
+        ? darken(0.1, props.theme.primaryColor)
+        : 'transparent'};
+    color: ${props =>
+      props.button === 'true' ? '#ffffff' : props.theme.primaryColor};
   }
 
   @media (max-width: ${props => props.theme.tabletWidth}) {
@@ -102,47 +90,35 @@ const MenuLink = styled(Link)`
   }
 `
 
-const MenuIcon = styled.i`
-  font-size: 1.8rem;
-  margin-right: 0.5rem;
-  vertical-align: text-bottom;
-`
-
-const MenuItem = props => (
-  <MenuItemContainer>
-    <MenuLink to={props.to}>
-      <MenuIcon className={props.icon} /> {props.title}
-    </MenuLink>
-  </MenuItemContainer>
-)
-
-const Avatar = props => (
-  <AvatarLink to={props.to}>
-    <AvatarImage src={props.src} alt={props.alt} />
-  </AvatarLink>
-)
-
 const SiteName = props => (
   <SiteNameLink to={props.to}>
-    <SiteNameText>Daniel Milner</SiteNameText>
-    <SiteNameDesc>Full Stack Web Developer</SiteNameDesc>
+    <SiteNameFirst>Daniel</SiteNameFirst>
+    <SiteNameLast>Milner</SiteNameLast>
   </SiteNameLink>
 )
 
-const Header = ({ siteTitle, pages, handleMobileMenu }) => (
-  <HeaderContainer>
-    <Avatar to="/" src={daniel} alt={siteTitle} />
-    <SiteName to="/" />
-    <Menu>
-      {pages.map(({ node }) => (
-        <MenuItem
-          to={node.page.value}
-          title={node.title.value}
-          icon={node.icon.value}
-        />
-      ))}
-    </Menu>
-  </HeaderContainer>
-)
-
-export default Header
+export default class Header extends Component {
+  render() {
+    return (
+      <HeaderContainer>
+        <SiteName to="/" />
+        <Menu>
+          {this.props.pages.map(({ node }, index) => (
+            <MenuItem
+              key={index}
+              to={node.page.value}
+              active={
+                this.props.location.pathname === node.page.value
+                  ? 'true'
+                  : 'false'
+              }
+              button={node.button ? 'true' : 'false'}
+            >
+              {node.title.value}
+            </MenuItem>
+          ))}
+        </Menu>
+      </HeaderContainer>
+    )
+  }
+}

@@ -1,28 +1,36 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import PageTitle from '../components/PageTitle'
-import PageContainer from '../components/PageContainer'
-import PageText from '../components/PageText'
+import styled from 'styled-components'
+import PageHeader from '../components/PageHeader'
 import Project from '../components/Project'
 import Layout from '../components/Layout'
 
 require('prismjs/themes/prism-tomorrow.css')
 
+const ProjectsContainer = styled.div`
+  margin: 0;
+  padding: 7rem;
+  display: grid;
+  grid-gap: 7rem;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    padding: 2rem;
+    grid-gap: 2rem;
+  }
+`
+
 export default function Template({
   data, // this prop will be injected by the GraphQL query we'll write in a bit
+  location,
 }) {
-  const { title, content } = data.cockpitPages
-  const pageTitle = title.value
-  const pageHtml = content.value.childMarkdownRemark.html
+  const { image, heading_title } = data.cockpitPages
   return (
-    <Layout>
-      <PageContainer>
-        <PageTitle>{pageTitle}</PageTitle>
-        <PageText
-          dangerouslySetInnerHTML={{
-            __html: pageHtml,
-          }}
-        />
+    <Layout location={location}>
+      <PageHeader
+        image={image.value.childImageSharp.fluid}
+        title={heading_title.value}
+      />
+      <ProjectsContainer>
         {data.projects.edges.map(({ node }) => (
           <Project
             link={node.url.value}
@@ -31,7 +39,7 @@ export default function Template({
             tech={node.technologies.value}
           />
         ))}
-      </PageContainer>
+      </ProjectsContainer>
     </Layout>
   )
 }
@@ -39,13 +47,15 @@ export default function Template({
 export const pageQuery = graphql`
   query ProjectPage($cockpitId: String!) {
     cockpitPages(cockpitId: { eq: $cockpitId }) {
-      title {
+      heading_title {
         value
       }
-      content {
+      image {
         value {
-          childMarkdownRemark {
-            html
+          childImageSharp {
+            fluid(maxWidth: 1900) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
           }
         }
       }

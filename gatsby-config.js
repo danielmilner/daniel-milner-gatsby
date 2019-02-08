@@ -60,7 +60,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [`assistant\:400,700,800`],
+        fonts: [`Assistant\:200,300,400,600,800`, `Playfair Display\:400,700`],
       },
     },
   ],

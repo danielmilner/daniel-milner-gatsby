@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
@@ -12,14 +11,11 @@ import styled from 'styled-components'
 import theme from '../utils/theme'
 
 const SiteContent = styled.div`
-  margin: 0 auto;
-  padding: 5rem;
-  @media (max-width: ${props => props.theme.tabletWidth}) {
-    padding: 1.5rem;
-  }
+  margin: 0;
+  padding: 0;
 `
 
-const Layout = ({ children }) => (
+const Layout = ({ children, location }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -34,7 +30,7 @@ const Layout = ({ children }) => (
               title {
                 value
               }
-              icon {
+              button {
                 value
               }
               page {
@@ -47,7 +43,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <ThemeProvider theme={theme}>
-        <MobileMenuContainer pages={data.primary_nav.edges}>
+        <MobileMenuContainer pages={data.primary_nav.edges} location={location}>
           <Helmet
             title={data.site.siteMetadata.title}
             meta={[
@@ -68,6 +64,7 @@ const Layout = ({ children }) => (
           <Header
             siteTitle={data.site.siteMetadata.title}
             pages={data.primary_nav.edges}
+            location={location}
           />
           <SiteContent className="site-content">{children}</SiteContent>
           <Footer />
@@ -76,9 +73,5 @@ const Layout = ({ children }) => (
     )}
   />
 )
-
-Layout.propTypes = {
-  children: PropTypes.func,
-}
 
 export default Layout

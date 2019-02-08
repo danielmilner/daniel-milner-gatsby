@@ -15,6 +15,7 @@ exports.createPages = ({ actions, graphql }) => {
 
   const pageTemplate = path.resolve(`src/templates/page.js`)
   const postTemplate = path.resolve(`src/templates/post.js`)
+  const homeTemplate = path.resolve(`src/templates/home.js`)
   const projectTemplate = path.resolve(`src/templates/project.js`)
   const contactTemplate = path.resolve(`src/templates/contact.js`)
   const postListTemplate = path.resolve(`src/templates/post-list.js`)
@@ -56,6 +57,9 @@ exports.createPages = ({ actions, graphql }) => {
     result.data.pages.edges.forEach(({ node }) => {
       layoutComponent = pageTemplate
       switch (node.template.value) {
+        case 'Home':
+          layoutComponent = homeTemplate
+          break
         case 'Projects':
           layoutComponent = projectTemplate
           break

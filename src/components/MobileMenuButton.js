@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { darken } from 'polished'
 
 const MobileButton = styled.a`
   position: absolute;
-  top: 2rem;
-  right: 1rem;
+  top: 0.5rem;
+  right: 1.5rem;
   font-size: 3rem;
-  color: ${props => props.theme.colorDark};
+  color: ${props => props.theme.primaryColor};
   padding: 1rem;
   display: inline-block;
   z-index: 1000;
   display: none;
+  cursor: pointer;
 
   &:hover,
   &:active {
-    color: #000;
+    color: ${props => darken(0.1, props.theme.primaryColor)};
   }
 
   @media (max-width: ${props => props.theme.tabletWidth}) {

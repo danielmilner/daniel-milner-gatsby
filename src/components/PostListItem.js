@@ -77,7 +77,7 @@ const Tag = styled.div`
 
 const PostListItem = props => (
   <GridItem padding={'0'}>
-    <PostLink to={props.link}>
+    <PostLink to={`/${props.link}`}>
       <PostImage fluid={props.image.childImageSharp.fluid} />
       <Inner>
         <Meta>
@@ -87,7 +87,7 @@ const PostListItem = props => (
         {props.tags !== undefined && (
           <Tags>
             {props.tags.map(tag => {
-              return <Tag>{tag}</Tag>
+              return <Tag key={tag}>{tag}</Tag>
             })}
           </Tags>
         )}

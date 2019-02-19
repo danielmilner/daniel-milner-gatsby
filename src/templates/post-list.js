@@ -39,9 +39,10 @@ class PostListTemplate extends React.Component {
         />
         <GridContainer>
           {posts.map(({ node }) => {
-            const { title, slug, date, image, tags } = node
+            const { title, slug, date, image, tags, cockpitId } = node
             return (
               <PostListItem
+                key={cockpitId}
                 title={title.value}
                 link={slug.value}
                 date={date.value}
@@ -80,6 +81,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          cockpitId
           title {
             value
           }

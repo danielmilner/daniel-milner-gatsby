@@ -48,7 +48,11 @@ export default function Template({
         />
         <SocialMediaContainer>
           {data.social.edges.map(({ node }) => (
-            <SocialMediaIcon href={node.url.value} alt={node.title.value}>
+            <SocialMediaIcon
+              href={node.url.value}
+              alt={node.title.value}
+              key={node.cockpitId}
+            >
               <i
                 className={node.icon.value}
                 style={{ color: node.color.value }}
@@ -96,6 +100,7 @@ export const pageQuery = graphql`
     social: allCockpitSocialMedia {
       edges {
         node {
+          cockpitId
           title {
             value
           }

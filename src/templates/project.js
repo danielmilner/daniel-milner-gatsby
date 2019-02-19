@@ -40,6 +40,7 @@ export default function Template({
       <ProjectsContainer>
         {data.projects.edges.map(({ node }) => (
           <Project
+            key={node.cockpitId}
             link={node.url.value}
             name={node.title.value}
             desc={node.content.value.childMarkdownRemark.html}
@@ -75,6 +76,7 @@ export const pageQuery = graphql`
     projects: allCockpitProjects {
       edges {
         node {
+          cockpitId
           title {
             value
           }

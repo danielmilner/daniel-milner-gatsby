@@ -49,10 +49,10 @@ const Footer = () => (
       &copy; {new Date().getFullYear()} Daniel Milner. All Rights Reserved.
     </Copyright>
     <Social>
-      <IconLink href={'https://github.com/danielmilner'}>
+      <IconLink href={'https://github.com/danielmilner'} title={`GitHub`}>
         <Icon className={'fab fa-github'} />
       </IconLink>
-      <IconLink href={'https://twitter.com/danielmilner'}>
+      <IconLink href={'https://twitter.com/danielmilner'} title={`Twitter`}>
         <Icon className={'fab fa-twitter'} />
       </IconLink>
     </Social>

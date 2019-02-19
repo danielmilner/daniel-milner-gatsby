@@ -70,7 +70,7 @@ const Project = props => (
     <ProjectDesc dangerouslySetInnerHTML={{ __html: props.desc }} />
     <ProjectTechContainer>
       {Object.keys(props.tech).map(key => (
-        <ProjectTechBadge>
+        <ProjectTechBadge key={key}>
           <i
             className={props.tech[key].value.icon.value}
             style={{ color: props.tech[key].value.color.value }}

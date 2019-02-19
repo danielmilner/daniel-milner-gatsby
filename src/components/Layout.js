@@ -52,6 +52,7 @@ const Layout = ({ children, location }) => (
                 content: 'The official website for Daniel Milner',
               },
               { name: 'keywords', content: 'daniel, milner, react, gatsby' },
+              { name: 'theme-color', content: `${theme.primaryColor}` },
             ]}
           >
             <link

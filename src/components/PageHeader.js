@@ -7,6 +7,7 @@ const Container = styled.div`
   margin: 0;
   width: 100%;
   height: ${props => (props.height ? props.height : '45vw')};
+  max-height: 60rem;
   position: relative;
   ${props =>
     props.title &&

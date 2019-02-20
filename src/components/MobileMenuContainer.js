@@ -100,8 +100,10 @@ export default function MobileMenuContainer(data) {
   useEffect(() => {
     if (menuVisible) {
       document.body.style.overflow = 'hidden'
+      document.getElementsByTagName('html')[0].style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'visible'
+      document.getElementsByTagName('html')[0].style.overflow = 'visible'
     }
   }, [menuVisible])
 

@@ -4,6 +4,7 @@ html {
   -webkit-text-size-adjust: 100%;
   font-size: 10px;
   height: 100%;
+  position: relative;
 }
 
 body {
@@ -12,6 +13,7 @@ body {
   background-color: #fff;
   font-size: 10px;
   font-family: 'Assistant';
+  position: relative;
 }
 
 *,

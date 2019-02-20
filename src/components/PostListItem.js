@@ -6,6 +6,7 @@ import GridItem from './GridItem'
 
 const PostLink = styled(Link)`
   text-decoration: none;
+  flex: auto;
 `
 
 const Inner = styled.div`

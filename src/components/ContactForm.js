@@ -20,6 +20,10 @@ const Input = styled.input`
   max-width: 55rem;
   margin-bottom: 1rem;
   border: 1px solid #ddd;
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    max-width: 100%;
+  }
 `
 
 const TextArea = styled.textarea`
@@ -36,6 +40,10 @@ const TextArea = styled.textarea`
   height: 20rem;
   margin-bottom: 1rem;
   border: 1px solid #ddd;
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    max-width: 100%;
+  }
 `
 
 const SubmitButton = styled.input`
@@ -49,6 +57,11 @@ const SubmitButton = styled.input`
   background-color: ${props => props.theme.primaryColor};
   border: 0;
   margin-bottom: 1rem;
+  -webkit-appearance: none;
+
+  @media (max-width: ${props => props.theme.tabletWidth}) {
+    width: 100%;
+  }
 
   &:hover,
   &:active {

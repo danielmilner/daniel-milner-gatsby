@@ -79,7 +79,7 @@ export default function ContactForm() {
   const handleSubmit = e => {
     e.preventDefault()
     fetch(
-      'http://cms.danielmilner.com/api/forms/submit/contact?token=c9a791a2a75471b3490897c86f1547',
+      'https://cms.danielmilner.com/api/forms/submit/contact?token=c9a791a2a75471b3490897c86f1547',
       {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },

@@ -54,14 +54,7 @@ const Layout = ({ children, location }) => (
               { name: 'keywords', content: 'daniel, milner, react, gatsby' },
               { name: 'theme-color', content: `${theme.primaryColor}` },
             ]}
-          >
-            <link
-              rel="stylesheet"
-              href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
-              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-              crossorigin="anonymous"
-            />
-          </Helmet>
+          />
           <Header
             siteTitle={data.site.siteMetadata.title}
             pages={data.primary_nav.edges}

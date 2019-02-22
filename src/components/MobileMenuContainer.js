@@ -109,7 +109,10 @@ export default function MobileMenuContainer(data) {
 
   return (
     <div>
-      <MobileMenuButton onClick={() => setMenuVisible(!menuVisible)} />
+      <MobileMenuButton
+        menuVisible={menuVisible}
+        onClick={() => setMenuVisible(!menuVisible)}
+      />
       <MobileMenu menuVisible={menuVisible}>
         <Menu>
           {pages.map(({ node }, index) => (

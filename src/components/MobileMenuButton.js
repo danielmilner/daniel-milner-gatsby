@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { darken } from 'polished'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const MobileButton = styled.a`
   position: absolute;
@@ -28,7 +30,9 @@ class MobileMenuButton extends Component {
   render() {
     return (
       <MobileButton onClick={this.props.onClick}>
-        <i className="fas fa-bars" />
+        {(this.props.menuVisible && <FontAwesomeIcon icon={faTimes} />) || (
+          <FontAwesomeIcon icon={faBars} />
+        )}
       </MobileButton>
     )
   }

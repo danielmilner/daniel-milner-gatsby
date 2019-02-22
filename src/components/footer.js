@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
 
 const Container = styled.div`
   background-color: ${props => props.theme.primaryColor};
@@ -39,7 +41,7 @@ const IconLink = styled.a`
   }
 `
 
-const Icon = styled.i`
+const Icon = styled(FontAwesomeIcon)`
   font-size: 2.4rem;
 `
 
@@ -50,10 +52,10 @@ const Footer = () => (
     </Copyright>
     <Social>
       <IconLink href={'https://github.com/danielmilner'} title={`GitHub`}>
-        <Icon className={'fab fa-github'} />
+        <Icon icon={faGithub} />
       </IconLink>
       <IconLink href={'https://twitter.com/danielmilner'} title={`Twitter`}>
-        <Icon className={'fab fa-twitter'} />
+        <Icon icon={faTwitter} />
       </IconLink>
     </Social>
   </Container>

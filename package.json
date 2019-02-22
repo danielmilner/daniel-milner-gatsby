@@ -5,6 +5,10 @@
   "author": "Daniel Milner <dmilner@gmail.com>",
   "dependencies": {
     "@fika/gatsby-source-cockpit": "^1.0.15",
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-brands-svg-icons": "^5.7.2",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "babel-plugin-styled-components": "^1.10.0",
     "gatsby": "^2.1.4",
     "gatsby-awesome-pagination": "^0.3.3",

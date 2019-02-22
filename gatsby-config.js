@@ -17,7 +17,6 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-offline`,
-    `gatsby-plugin-netlify`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -95,5 +94,6 @@ module.exports = {
         icon: 'src/images/daniel.jpg', // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-netlify`,
   ],
 }

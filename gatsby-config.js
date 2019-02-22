@@ -66,9 +66,18 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-fonts`,
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
       options: {
-        fonts: [`Assistant\:200,300,400,600,800`, `Playfair Display\:400,700`],
+        fonts: [
+          {
+            family: `Assistant`,
+            variants: [`200`, `300`, `400`, `600`, `800`],
+          },
+          {
+            family: `Playfair Display`,
+            variants: [`400`, `700`],
+          },
+        ],
       },
     },
     {

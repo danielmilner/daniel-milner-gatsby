@@ -1,5 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faJsSquare,
+  faReact,
+  faWordpressSimple,
+  faAppStoreIos,
+  faGooglePlay,
+  faNodeJs,
+  faPhp,
+  faWindows,
+  faApple,
+  faAndroid,
+} from '@fortawesome/free-brands-svg-icons'
 
 const ProjectContainer = styled.a`
   margin: 0;
@@ -24,7 +37,6 @@ const ProjectName = styled.div`
   line-height: 3.2rem;
   margin-bottom: 1.5rem;
   color: ${props => props.theme.primaryColor};
-  /* text-transform: uppercase; */
 `
 
 const ProjectDesc = styled.div`
@@ -51,18 +63,45 @@ const ProjectTechContainer = styled.div`
 `
 
 const ProjectTechBadge = styled.div`
-  font-size: 1rem;
-  font-family: ${props => props.theme.sanSerifFont};
+  font-size: 1.2rem;
+  font-family: ${props => props.theme.fontFamily};
+  font-weight: 600;
+  color: ${props => props.theme.altTextColor};
   text-transform: uppercase;
   display: inline-block;
-  margin-right: 1rem;
-
-  i {
-    font-size: 1.6rem;
-    vertical-align: middle;
-    margin-right: 0.2rem;
-  }
+  margin-right: 1.5rem;
 `
+
+const Icon = styled(FontAwesomeIcon)`
+  font-size: 1.4rem;
+  vertical-align: middle;
+  margin-right: 0.2rem;
+`
+
+const getIcon = (icon, style) => {
+  switch (icon) {
+    case 'javascript':
+      return <Icon icon={faJsSquare} style={{ color: style }} />
+    case 'react':
+      return <Icon icon={faReact} style={{ color: style }} />
+    case 'wordpress':
+      return <Icon icon={faWordpressSimple} style={{ color: style }} />
+    case 'app-store':
+      return <Icon icon={faAppStoreIos} style={{ color: style }} />
+    case 'google-play':
+      return <Icon icon={faGooglePlay} style={{ color: style }} />
+    case 'node':
+      return <Icon icon={faNodeJs} style={{ color: style }} />
+    case 'php':
+      return <Icon icon={faPhp} style={{ color: style }} />
+    case 'windows':
+      return <Icon icon={faWindows} style={{ color: style }} />
+    case 'apple':
+      return <Icon icon={faApple} style={{ color: style }} />
+    case 'android':
+      return <Icon icon={faAndroid} style={{ color: style }} />
+  }
+}
 
 const Project = props => (
   <ProjectContainer href={props.link}>
@@ -71,10 +110,10 @@ const Project = props => (
     <ProjectTechContainer>
       {Object.keys(props.tech).map(key => (
         <ProjectTechBadge key={key}>
-          <i
-            className={props.tech[key].value.icon.value}
-            style={{ color: props.tech[key].value.color.value }}
-          />{' '}
+          {getIcon(
+            props.tech[key].value.icon.value,
+            props.tech[key].value.color.value
+          )}{' '}
           {props.tech[key].value.title.value}
         </ProjectTechBadge>
       ))}

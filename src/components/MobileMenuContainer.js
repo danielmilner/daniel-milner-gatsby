@@ -118,10 +118,10 @@ export default function MobileMenuContainer(data) {
           {pages.map(({ node }, index) => (
             <MenuItem
               key={index}
-              to={node.page.value}
-              title={node.title.value}
-              active={location.pathname === node.page.value ? 'true' : 'false'}
-              button={node.button ? 'true' : 'false'}
+              to={node.url}
+              title={node.label}
+              active={location.pathname === node.url ? 'true' : 'false'}
+              button={node.ftConfig.ftButton ? 'true' : 'false'}
               onClick={() => setMenuVisible(false)}
             />
           ))}

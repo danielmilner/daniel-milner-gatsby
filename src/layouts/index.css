@@ -21,3 +21,36 @@ body {
 *:after {
   box-sizing: border-box;
 }
+
+p {
+    font-weight: 300;
+    line-height: 2.8rem;
+    font-size: 1.7rem;
+    margin-bottom: 4rem;
+  }
+
+  hr {
+    height: 1px;
+    border: 0;
+    background-color: #e8e8e8;
+    margin: 4rem 0 0 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 400;
+    margin-top: 4rem;
+  }
+
+  a {
+    text-decoration: none;
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: underline;
+    }
+  }

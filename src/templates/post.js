@@ -8,6 +8,14 @@ import Layout from '../components/Layout'
 import PageHeader from '../components/PageHeader'
 import SEO from '../components/seo/SEO'
 
+import CoreHeadingBlock from '../components/blocks/CoreHeadingBlock'
+import CoreParagraphBlock from '../components/blocks/CoreParagraphBlock'
+
+const BlockComponents = {
+  WordPress_CoreHeadingBlock: CoreHeadingBlock,
+  WordPress_CoreParagraphBlock: CoreParagraphBlock,
+}
+
 require('prismjs/themes/prism-tomorrow.css')
 
 const Title = styled.div`
@@ -51,76 +59,79 @@ const Tag = styled.div`
   }
 `
 
-export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
-  location,
-}) {
-  const { title, content, date, tags, image } = data.cockpitPosts
-  const postTitle = title.value
-  const postHtml = content.value.childMarkdownRemark.html
-  const postDate = date.value
+const Template = (data, location) => {
+  const postData = data.data.wp.post
+  const { title, blocks, date, tags } = postData
+  const image = postData.featuredImage.imageFile
   return (
     <Layout location={location}>
       <SEO
-        title={postTitle}
+        title={title}
         pathname={location.pathname}
-        desc={content.value.childMarkdownRemark.excerpt}
-        banner={image.value.banner.fixed.src}
-        article
+        desc={excerpt}
+        banner={image.banner.fixed}
       />
-      <PageHeader image={image.value.childImageSharp.fluid} height={'35vw'} />
+      <PageHeader image={image.childImageSharp.fluid} height={'35vw'} />
       <PageContainer>
         <Meta>
-          <MetaItem>{postDate}</MetaItem>
+          <MetaItem>
+            {date.toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              day: 'numeric',
+            })}
+          </MetaItem>
         </Meta>
-        <Title>{postTitle}</Title>
-        {tags.value !== undefined && (
+        <Title>{title}</Title>
+        {tags !== undefined && (
           <Tags>
-            {tags.value.map((tag, index) => {
-              return <Tag key={index}>{tag}</Tag>
+            {tags.edges.map((node, index) => {
+              return <Tag key={index}>{node.name}</Tag>
             })}
           </Tags>
         )}
-        <PageText
-          dangerouslySetInnerHTML={{
-            __html: postHtml,
-          }}
-        />
+        {blocks.map((block, index) => {
+          const typename = block.__typename
+          const $Block = BlockComponents[typename]
+          return <$Block key={index} {...block.attributes} />
+        })}
       </PageContainer>
     </Layout>
   )
 }
 
+export default Template
+
 export const pageQuery = graphql`
-  query Post($cockpitId: String!) {
-    cockpitPosts(cockpitId: { eq: $cockpitId }) {
-      title {
-        value
-      }
-      content {
-        value {
-          childMarkdownRemark {
-            html
-            excerpt
-          }
-        }
-      }
-      date {
-        value(formatString: "MMMM Do, YYYY")
-      }
-      tags {
-        value
-      }
-      image {
-        value {
-          childImageSharp {
-            fluid(maxWidth: 1900) {
-              ...GatsbyImageSharpFluid_withWebp
+  query Page($id: Int) {
+    wp {
+      post: postBy(postId: $id) {
+        title
+        featuredImage {
+          sourceUrl
+          imageFile {
+            childImageSharp {
+              fluid(maxWidth: 1900) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+            banner: childImageSharp {
+              fixed(width: 1280, height: 720) {
+                src
+              }
             }
           }
-          banner: childImageSharp {
-            fixed(width: 1280, height: 720) {
-              src
+        }
+        blocks {
+          __typename
+          ...CoreHeadingBlock
+          ...CoreParagraphBlock
+        }
+        date
+        tags {
+          edges {
+            node {
+              name
             }
           }
         }
@@ -128,3 +139,41 @@ export const pageQuery = graphql`
     }
   }
 `
+
+// export const pageQuery = graphql`
+//   query Post($cockpitId: String!) {
+//     cockpitPosts(cockpitId: { eq: $cockpitId }) {
+//       title {
+//         value
+//       }
+//       content {
+//         value {
+//           childMarkdownRemark {
+//             html
+//             excerpt
+//           }
+//         }
+//       }
+//       date {
+//         value(formatString: "MMMM Do, YYYY")
+//       }
+//       tags {
+//         value
+//       }
+//       image {
+//         value {
+//           childImageSharp {
+//             fluid(maxWidth: 1900) {
+//               ...GatsbyImageSharpFluid_withWebp
+//             }
+//           }
+//           banner: childImageSharp {
+//             fixed(width: 1280, height: 720) {
+//               src
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `

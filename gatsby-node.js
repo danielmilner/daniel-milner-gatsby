@@ -7,8 +7,37 @@
 // You can delete this file if you're not using it
 
 const { paginate } = require('gatsby-awesome-pagination')
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const path = require('path')
+
+exports.createResolvers = ({
+  actions,
+  cache,
+  createNodeId,
+  createResolvers,
+  store,
+  reporter,
+}) => {
+  const { createNode } = actions
+  createResolvers({
+    WordPress_MediaItem: {
+      imageFile: {
+        type: `File`,
+        resolve(source, args, context, info) {
+          return createRemoteFileNode({
+            url: source.sourceUrl,
+            store,
+            cache,
+            createNode,
+            createNodeId,
+            reporter,
+          })
+        },
+      },
+    },
+  })
+}
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
@@ -22,29 +51,26 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      pages: allCockpitPages {
-        edges {
-          node {
-            cockpitId
-            slug {
-              value
-            }
-            template {
-              value
+      wp {
+        pages(where: { status: PUBLISH }) {
+          edges {
+            node {
+              id: pageId
+              slug
+              ftConfig {
+                template
+              }
             }
           }
         }
-      }
-      posts: allCockpitPosts(
-        filter: { published: { value: { eq: true } } }
-        sort: { fields: [date___value], order: DESC }
-      ) {
-        edges {
-          node {
-            slug {
-              value
+        posts(
+          where: { status: PUBLISH, orderby: { field: DATE, order: DESC } }
+        ) {
+          edges {
+            node {
+              id: postId
+              slug
             }
-            cockpitId
           }
         }
       }
@@ -54,9 +80,9 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors)
     }
     let layoutComponent = pageTemplate
-    result.data.pages.edges.forEach(({ node }) => {
+    result.data.wp.pages.edges.forEach(({ node }) => {
       layoutComponent = pageTemplate
-      switch (node.template.value) {
+      switch (node.ftConfig.template) {
         case 'Home':
           layoutComponent = homeTemplate
           break
@@ -68,26 +94,26 @@ exports.createPages = ({ actions, graphql }) => {
           break
       }
       createPage({
-        path: `/${node.slug ? node.slug.value : ''}`,
+        path: `/${node.slug === 'home' ? '' : node.slug}`,
         component: layoutComponent,
         context: {
-          cockpitId: node.cockpitId,
+          id: node.id,
         }, // additional data can be passed via context
       })
     })
-    result.data.posts.edges.forEach(({ node }) => {
+    result.data.wp.posts.edges.forEach(({ node }) => {
       createPage({
-        path: `/${node.slug.value}`,
+        path: `/${node.slug}`,
         component: postTemplate,
         context: {
-          cockpitId: node.cockpitId,
+          id: node.id,
         },
       })
     })
 
     paginate({
       createPage, // The Gatsby `createPage` function
-      items: result.data.posts.edges, // An array of objects
+      items: result.data.wp.posts.edges, // An array of objects
       itemsPerPage: 10, // How many items you want per page
       pathPrefix: '/blog', // Creates pages like `/blog`, `/blog/2`, etc
       component: postListTemplate, // Just like `createPage()`

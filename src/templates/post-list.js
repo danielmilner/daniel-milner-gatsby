@@ -24,14 +24,14 @@ const PageNextLink = styled(Link)`
 
 class PostListTemplate extends React.Component {
   render() {
-    const posts = this.props.data.allCockpitPosts.edges
+    const posts = this.props.data.wp.posts.edges
     return (
       <Layout location={this.props.location}>
         <SEO
           title={`Blog`}
           pathname={this.props.location.pathname}
           desc={`Daniel Milner's blog posts.`}
-          banner={this.props.data.HeaderImage.banner.fixed.src}
+          banner={this.props.data.wp.featuredImage.imageFile.banner.fixed.src}
         />
         <PageHeader
           image={this.props.data.HeaderImage.childImageSharp.fluid}

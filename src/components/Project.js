@@ -100,6 +100,8 @@ const getIcon = (icon, style) => {
       return <Icon icon={faApple} style={{ color: style }} />
     case 'android':
       return <Icon icon={faAndroid} style={{ color: style }} />
+    default:
+      return
   }
 }
 

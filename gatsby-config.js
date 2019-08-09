@@ -25,6 +25,14 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-source-graphql`,
+      options: {
+        typeName: `WordPress`,
+        fieldName: `wp`,
+        url: `https://wordpress.danielmilner.com/graphql`,
+      },
+    },
+    {
       resolve: `@fika/gatsby-source-cockpit`,
       options: {
         token: `6ac3bdf838484acebba54f65a729bc`,

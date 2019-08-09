@@ -7,68 +7,72 @@ import PageText from '../components/PageText'
 import Layout from '../components/Layout'
 import SEO from '../components/seo/SEO'
 
+import CoreHeadingBlock from '../components/blocks/CoreHeadingBlock'
+import CoreParagraphBlock from '../components/blocks/CoreParagraphBlock'
+
+const BlockComponents = {
+  WordPress_CoreHeadingBlock: CoreHeadingBlock,
+  WordPress_CoreParagraphBlock: CoreParagraphBlock,
+}
+
 require('prismjs/themes/prism-tomorrow.css')
 
-export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
-  location,
-}) {
-  const { title, content, image, heading_title } = data.cockpitPages
-  const pageTitle = title.value
-  const pageHtml = content.value.childMarkdownRemark.html
+const Template = (data, location) => {
+  const pageData = data.data.wp.page
+  const { title, blocks, excerpt } = pageData
+  const image = pageData.featuredImage.imageFile
+  const heading_title = pageData.ftConfig.headingTitle
   return (
     <Layout location={location}>
       <SEO
-        title={pageTitle}
+        title={title}
         pathname={location.pathname}
-        desc={content.value.childMarkdownRemark.excerpt}
-        banner={image.value.banner.fixed.src}
+        desc={excerpt}
+        banner={image.banner.fixed}
       />
-      <PageHeader
-        image={image.value.childImageSharp.fluid}
-        title={heading_title.value}
-      />
+      <PageHeader image={image.childImageSharp.fluid} title={heading_title} />
       <PageContainer>
-        <PageTitle>{pageTitle}</PageTitle>
-        <PageText
-          dangerouslySetInnerHTML={{
-            __html: pageHtml,
-          }}
-        />
+        <PageTitle>{title}</PageTitle>
+        {blocks.map((block, index) => {
+          const typename = block.__typename
+          const $Block = BlockComponents[typename]
+          return <$Block key={index} {...block.attributes} />
+        })}
       </PageContainer>
     </Layout>
   )
 }
 
+export default Template
+
 export const pageQuery = graphql`
-  query Page($cockpitId: String!) {
-    cockpitPages(cockpitId: { eq: $cockpitId }) {
-      title {
-        value
-      }
-      content {
-        value {
-          childMarkdownRemark {
-            html
-            excerpt
+  query Page($id: Int) {
+    wp {
+      page: pageBy(pageId: $id) {
+        title
+        excerpt
+        featuredImage {
+          sourceUrl
+          imageFile {
+            childImageSharp {
+              fluid(maxWidth: 1900) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+            banner: childImageSharp {
+              fixed(width: 1280, height: 720) {
+                src
+              }
+            }
           }
         }
-      }
-      heading_title {
-        value
-      }
-      image {
-        value {
-          childImageSharp {
-            fluid(maxWidth: 1900) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-          banner: childImageSharp {
-            fixed(width: 1280, height: 720) {
-              src
-            }
-          }
+        blocks {
+          __typename
+          ...CoreHeadingBlock
+          ...CoreParagraphBlock
+        }
+        ftConfig {
+          headingTitle
         }
       }
     }

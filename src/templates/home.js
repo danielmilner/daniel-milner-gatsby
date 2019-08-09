@@ -6,6 +6,14 @@ import Layout from '../components/Layout'
 import DevIcons from '../components/DevIcons'
 import SEO from '../components/seo/SEO'
 
+import CoreHeadingBlock from '../components/blocks/CoreHeadingBlock'
+import CoreParagraphBlock from '../components/blocks/CoreParagraphBlock'
+
+const BlockComponents = {
+  WordPress_CoreHeadingBlock: CoreHeadingBlock,
+  WordPress_CoreParagraphBlock: CoreParagraphBlock,
+}
+
 require('prismjs/themes/prism-tomorrow.css')
 
 const ContentContainer = styled.div`
@@ -22,7 +30,6 @@ const ContentInner = styled.div`
   padding: 0 2rem;
   max-width: ${props => props.theme.contentMaxWidth};
   width: 100%;
-  text-align: center;
 
   h1,
   h2,
@@ -37,7 +44,6 @@ const ContentInner = styled.div`
     font-size: 4.8rem;
     line-height: 5rem;
     color: ${props => props.theme.primaryColor};
-    /* text-transform: uppercase; */
     @media (max-width: ${props => props.theme.tabletWidth}) {
       font-size: 3rem;
       line-height: 3.5rem;
@@ -64,62 +70,64 @@ const ContentInner = styled.div`
   }
 `
 
-export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
-  location,
-}) {
-  const { content, image, heading_title } = data.cockpitPages
-  const pageHtml = content.value.childMarkdownRemark.html
+const Template = (data, location) => {
+  const pageData = data.data.wp.page
+  const { title, blocks, excerpt } = pageData
+  const image = pageData.featuredImage.imageFile
+  const heading_title = pageData.ftConfig.headingTitle
   return (
     <Layout location={location}>
       <SEO
-        title={`Daniel Milner`}
+        title={title}
         pathname={location.pathname}
-        desc={content.value.childMarkdownRemark.excerpt}
-        banner={image.value.banner.fixed.src}
+        desc={excerpt}
+        banner={image.banner.fixed}
       />
-      <PageHeader
-        image={image.value.childImageSharp.fluid}
-        title={heading_title.value}
-      />
+      <PageHeader image={image.childImageSharp.fluid} title={heading_title} />
       <DevIcons />
       <ContentContainer>
-        <ContentInner
-          dangerouslySetInnerHTML={{
-            __html: pageHtml,
-          }}
-        />
+        <ContentInner>
+          {blocks.map((block, index) => {
+            const typename = block.__typename
+            const $Block = BlockComponents[typename]
+            return <$Block key={index} {...block.attributes} />
+          })}
+        </ContentInner>
       </ContentContainer>
     </Layout>
   )
 }
 
+export default Template
+
 export const pageQuery = graphql`
-  query Home($cockpitId: String!) {
-    cockpitPages(cockpitId: { eq: $cockpitId }) {
-      content {
-        value {
-          childMarkdownRemark {
-            html
-            excerpt
+  query Home($id: Int) {
+    wp {
+      page: pageBy(pageId: $id) {
+        title
+        excerpt
+        featuredImage {
+          sourceUrl
+          imageFile {
+            childImageSharp {
+              fluid(maxWidth: 1900) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+            banner: childImageSharp {
+              fixed(width: 1280, height: 720) {
+                src
+              }
+            }
           }
         }
-      }
-      heading_title {
-        value
-      }
-      image {
-        value {
-          childImageSharp {
-            fluid(maxWidth: 1900) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-          banner: childImageSharp {
-            fixed(width: 1280, height: 720) {
-              src
-            }
-          }
+        blocks {
+          __typename
+          ...CoreHeadingBlock
+          ...CoreParagraphBlock
+        }
+        ftConfig {
+          headingTitle
         }
       }
     }

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { darken } from 'polished'
-import PageText from './PageText'
 
 const Form = styled.form`
   margin-bottom: 4rem;
@@ -73,26 +72,9 @@ const SubmitButton = styled.input`
 export default function ContactForm() {
   return (
     <Form name="contact" method="post" netlify>
-      <Input
-        value={name}
-        placeholder="Your name"
-        type="text"
-        name="name"
-        required
-      />
-      <Input
-        value={email}
-        placeholder="Your email"
-        type="email"
-        name="email"
-        required
-      />
-      <TextArea
-        placeholder="Your message..."
-        name="message"
-        value={message}
-        required
-      />
+      <Input placeholder="Your name" type="text" name="name" required />
+      <Input placeholder="Your email" type="email" name="email" required />
+      <TextArea placeholder="Your message..." name="message" required />
       <SubmitButton type="submit" value="Send" />
     </Form>
   )

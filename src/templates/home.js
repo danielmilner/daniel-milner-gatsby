@@ -11,9 +11,9 @@ import {
   CoreParagraphBlock,
 } from 'wp-block-components'
 
-import CoreCodeBlockFragment from '../graphql/CoreCodeBlockFragment'
-import CoreHeadingBlockFragment from '../graphql/CoreHeadingBlockFragment'
-import CoreParagraphBlockFragment from '../graphql/CoreParagraphBlockFragment'
+import '../graphql/CoreCodeBlockFragment'
+import '../graphql/CoreHeadingBlockFragment'
+import '../graphql/CoreParagraphBlockFragment'
 
 const BlockComponents = {
   WPGraphQL_CoreCodeBlock: CoreCodeBlock,
@@ -95,13 +95,7 @@ const Template = (data, location) => {
           {blocks.map((block, index) => {
             const typename = block.__typename
             const Block = BlockComponents[typename]
-            return (
-              <Block
-                key={index}
-                attributes={block.attributes}
-                block={theme.block}
-              />
-            )
+            return <Block key={index} attributes={block.attributes} />
           })}
         </ContentInner>
       </ContentContainer>

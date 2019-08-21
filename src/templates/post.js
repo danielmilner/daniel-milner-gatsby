@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
 
@@ -13,9 +13,9 @@ import {
   CoreParagraphBlock,
 } from 'wp-block-components'
 
-import CoreCodeBlockFragment from '../graphql/CoreCodeBlockFragment'
-import CoreHeadingBlockFragment from '../graphql/CoreHeadingBlockFragment'
-import CoreParagraphBlockFragment from '../graphql/CoreParagraphBlockFragment'
+import '../graphql/CoreCodeBlockFragment'
+import '../graphql/CoreHeadingBlockFragment'
+import '../graphql/CoreParagraphBlockFragment'
 
 const BlockComponents = {
   WPGraphQL_CoreCodeBlock: CoreCodeBlock,

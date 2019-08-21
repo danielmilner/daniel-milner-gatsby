@@ -2,8 +2,6 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import PageHeader from '../components/PageHeader'
-import PageTitle from '../components/PageTitle'
-import PageContainer from '../components/PageContainer'
 import Project from '../components/Project'
 import Layout from '../components/Layout'
 import SEO from '../components/seo/SEO'
@@ -22,7 +20,7 @@ const ProjectsContainer = styled.div`
 
 export default function Template({ data, location }) {
   const pageData = data.wordPress.page
-  const { title, blocks, excerpt } = pageData
+  const { title, excerpt } = pageData
   const image = pageData.featuredImage.imageFile
   const heading_title = pageData.ftConfig.headingTitle
   return (

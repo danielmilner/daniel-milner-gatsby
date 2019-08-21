@@ -106,15 +106,13 @@ export default class Header extends Component {
           {this.props.pages.map(({ node }, index) => (
             <MenuItem
               key={index}
-              to={node.page.value}
+              to={node.url}
               active={
-                this.props.location.pathname === node.page.value
-                  ? 'true'
-                  : 'false'
+                this.props.location.pathname === node.url ? 'true' : 'false'
               }
-              button={node.button ? 'true' : 'false'}
+              button={node.ftConfig.ftButton ? 'true' : 'false'}
             >
-              {node.title.value}
+              {node.label}
             </MenuItem>
           ))}
         </Menu>

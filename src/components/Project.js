@@ -78,28 +78,34 @@ const Icon = styled(FontAwesomeIcon)`
   margin-right: 0.2rem;
 `
 
-const getIcon = (icon, style) => {
+const getIcon = icon => {
   switch (icon) {
     case 'javascript':
-      return <Icon icon={faJsSquare} style={{ color: style }} />
+      return <Icon icon={faJsSquare} style={{ color: 'rgb(247, 223, 30)' }} />
     case 'react':
-      return <Icon icon={faReact} style={{ color: style }} />
+      return <Icon icon={faReact} style={{ color: 'rgb(97, 218, 251)' }} />
     case 'wordpress':
-      return <Icon icon={faWordpressSimple} style={{ color: style }} />
+      return (
+        <Icon icon={faWordpressSimple} style={{ color: 'rgb(33, 117, 155)' }} />
+      )
     case 'app-store':
-      return <Icon icon={faAppStoreIos} style={{ color: style }} />
+      return (
+        <Icon icon={faAppStoreIos} style={{ color: 'rgb(142, 142, 147)' }} />
+      )
     case 'google-play':
-      return <Icon icon={faGooglePlay} style={{ color: style }} />
+      return <Icon icon={faGooglePlay} style={{ color: 'rgb(164, 198, 57)' }} />
     case 'node':
-      return <Icon icon={faNodeJs} style={{ color: style }} />
+      return <Icon icon={faNodeJs} style={{ color: '#215732' }} />
     case 'php':
-      return <Icon icon={faPhp} style={{ color: style }} />
+      return <Icon icon={faPhp} style={{ color: '#8892be' }} />
     case 'windows':
-      return <Icon icon={faWindows} style={{ color: style }} />
+      return <Icon icon={faWindows} style={{ color: '#0078d7' }} />
     case 'apple':
-      return <Icon icon={faApple} style={{ color: style }} />
+      return <Icon icon={faApple} style={{ color: 'rgb(142, 142, 147)' }} />
     case 'android':
-      return <Icon icon={faAndroid} style={{ color: style }} />
+      return <Icon icon={faAndroid} style={{ color: 'rgb(164, 198, 57)' }} />
+    default:
+      return
   }
 }
 
@@ -110,11 +116,7 @@ const Project = props => (
     <ProjectTechContainer>
       {Object.keys(props.tech).map(key => (
         <ProjectTechBadge key={key}>
-          {getIcon(
-            props.tech[key].value.icon.value,
-            props.tech[key].value.color.value
-          )}{' '}
-          {props.tech[key].value.title.value}
+          {getIcon(props.tech[key].icon)} {props.tech[key].title}
         </ProjectTechBadge>
       ))}
     </ProjectTechContainer>

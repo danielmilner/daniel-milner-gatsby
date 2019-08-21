@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { darken } from 'polished'
-import PageText from './PageText'
 
 const Form = styled.form`
   margin-bottom: 4rem;
@@ -71,57 +70,12 @@ const SubmitButton = styled.input`
 `
 
 export default function ContactForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [submit, setSubmit] = useState(false)
-
-  const handleSubmit = e => {
-    e.preventDefault()
-    fetch(
-      'https://cms.danielmilner.com/api/forms/submit/contact?token=c9a791a2a75471b3490897c86f1547',
-      {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          form: {
-            Name: name,
-            Email: email,
-            Message: message,
-          },
-        }),
-      }
-    ).then(setSubmit(true))
-  }
-
   return (
-    (submit === false && (
-      <Form onSubmit={handleSubmit}>
-        <Input
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder="Your name"
-          type="text"
-          name="name"
-          required
-        />
-        <Input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          placeholder="Your email"
-          type="email"
-          name="email"
-          required
-        />
-        <TextArea
-          onChange={e => setMessage(e.target.value)}
-          placeholder="Your message..."
-          name="message"
-          value={message}
-          required
-        />
-        <SubmitButton type="submit" value="Send" />
-      </Form>
-    )) || <PageText>Thanks for contacting me!</PageText>
+    <Form name="contact" method="post" netlify>
+      <Input placeholder="Your name" type="text" name="name" required />
+      <Input placeholder="Your email" type="email" name="email" required />
+      <TextArea placeholder="Your message..." name="message" required />
+      <SubmitButton type="submit" value="Send" />
+    </Form>
   )
 }

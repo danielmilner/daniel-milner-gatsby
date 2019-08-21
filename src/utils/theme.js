@@ -4,7 +4,7 @@ const theme = {
   altTextColor: '#919191',
   bgColor: '#ffffff',
   altBgColor: '#f2f2f2',
-  textSize: '2rem',
+  textSize: '1.7rem',
   fontFamily: 'Assistant',
   serifFont: 'Playfair Display',
   desktopWidth: '960px',

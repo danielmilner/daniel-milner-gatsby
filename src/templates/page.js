@@ -3,72 +3,87 @@ import { graphql } from 'gatsby'
 import PageHeader from '../components/PageHeader'
 import PageTitle from '../components/PageTitle'
 import PageContainer from '../components/PageContainer'
-import PageText from '../components/PageText'
+// import PageText from '../components/PageText'
 import Layout from '../components/Layout'
 import SEO from '../components/seo/SEO'
+import {
+  CoreCodeBlock,
+  CoreHeadingBlock,
+  CoreParagraphBlock,
+} from 'wp-block-components'
 
-require('prismjs/themes/prism-tomorrow.css')
+import '../graphql/CoreCodeBlockFragment'
+import '../graphql/CoreHeadingBlockFragment'
+import '../graphql/CoreParagraphBlockFragment'
 
-export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
-  location,
-}) {
-  const { title, content, image, heading_title } = data.cockpitPages
-  const pageTitle = title.value
-  const pageHtml = content.value.childMarkdownRemark.html
+const BlockComponents = {
+  WPGraphQL_CoreCodeBlock: CoreCodeBlock,
+  WPGraphQL_CoreHeadingBlock: CoreHeadingBlock,
+  WPGraphQL_CoreParagraphBlock: CoreParagraphBlock,
+}
+
+const Template = (data, location) => {
+  const pageData = data.data.wordPress.page
+  const { title, blocks, excerpt } = pageData
+  const image = pageData.featuredImage.imageFile
+  const heading_title = pageData.ftConfig.headingTitle
+  console.log(pageData.featuredImage.sizes)
   return (
     <Layout location={location}>
       <SEO
-        title={pageTitle}
+        title={title}
         pathname={location.pathname}
-        desc={content.value.childMarkdownRemark.excerpt}
-        banner={image.value.banner.fixed.src}
+        desc={excerpt}
+        banner={image.banner.fixed}
       />
-      <PageHeader
-        image={image.value.childImageSharp.fluid}
-        title={heading_title.value}
-      />
+      <PageHeader image={image.childImageSharp.fluid} title={heading_title} />
       <PageContainer>
-        <PageTitle>{pageTitle}</PageTitle>
-        <PageText
-          dangerouslySetInnerHTML={{
-            __html: pageHtml,
-          }}
-        />
+        <PageTitle>{title}</PageTitle>
+        {blocks.map((block, index) => {
+          const typename = block.__typename
+          if (BlockComponents[typename]) {
+            const Block = BlockComponents[typename]
+            return <Block key={index} attributes={block.attributes} />
+          } else {
+            return null
+          }
+        })}
       </PageContainer>
     </Layout>
   )
 }
 
+export default Template
+
 export const pageQuery = graphql`
-  query Page($cockpitId: String!) {
-    cockpitPages(cockpitId: { eq: $cockpitId }) {
-      title {
-        value
-      }
-      content {
-        value {
-          childMarkdownRemark {
-            html
-            excerpt
+  query Page($id: ID) {
+    wordPress {
+      page: pageBy(id: $id) {
+        title
+        excerpt
+        featuredImage {
+          sourceUrl
+          imageFile {
+            childImageSharp {
+              fluid(maxWidth: 1900) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+            banner: childImageSharp {
+              fixed(width: 1280, height: 720) {
+                src
+              }
+            }
           }
         }
-      }
-      heading_title {
-        value
-      }
-      image {
-        value {
-          childImageSharp {
-            fluid(maxWidth: 1900) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-          banner: childImageSharp {
-            fixed(width: 1280, height: 720) {
-              src
-            }
-          }
+        blocks {
+          __typename
+          ...CoreCodeBlock
+          ...CoreHeadingBlock
+          ...CoreParagraphBlock
+        }
+        ftConfig {
+          headingTitle
         }
       }
     }

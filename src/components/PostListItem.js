@@ -76,25 +76,34 @@ const Tag = styled.div`
   }
 `
 
-const PostListItem = props => (
-  <GridItem padding={'0'}>
-    <PostLink to={`/${props.link}`}>
-      <PostImage fluid={props.image.childImageSharp.fluid} />
-      <Inner>
-        <Meta>
-          <MetaItem>{props.date}</MetaItem>
-        </Meta>
-        <Title>{props.title}</Title>
-        {props.tags !== undefined && (
-          <Tags>
-            {props.tags.map(tag => {
-              return <Tag key={tag}>{tag}</Tag>
-            })}
-          </Tags>
-        )}
-      </Inner>
-    </PostLink>
-  </GridItem>
-)
+const PostListItem = props => {
+  const postDate = new Date(props.date)
+  return (
+    <GridItem padding={'0'}>
+      <PostLink to={`/${props.link}`}>
+        <PostImage fluid={props.image.imageFile.childImageSharp.fluid} />
+        <Inner>
+          <Meta>
+            <MetaItem>
+              {postDate.toLocaleDateString('en-US', {
+                month: 'long',
+                year: 'numeric',
+                day: 'numeric',
+              })}
+            </MetaItem>
+          </Meta>
+          <Title>{props.title}</Title>
+          {props.tags !== undefined && (
+            <Tags>
+              {props.tags.nodes.map(tag => {
+                return <Tag key={tag.id}>{tag.name}</Tag>
+              })}
+            </Tags>
+          )}
+        </Inner>
+      </PostLink>
+    </GridItem>
+  )
+}
 
 export default PostListItem

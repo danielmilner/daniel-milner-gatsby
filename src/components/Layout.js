@@ -24,17 +24,30 @@ const Layout = ({ children, location }) => (
             title
           }
         }
-        primary_nav: allCockpitNavigation {
-          edges {
-            node {
-              title {
-                value
-              }
-              button {
-                value
-              }
-              page {
-                value
+        # primary_nav: allCockpitNavigation {
+        #   edges {
+        #     node {
+        #       title {
+        #         value
+        #       }
+        #       button {
+        #         value
+        #       }
+        #       page {
+        #         value
+        #       }
+        #     }
+        #   }
+        # }
+        primary_nav: wordPress {
+          menuItems(where: { location: PRIMARY }) {
+            edges {
+              node {
+                label
+                url
+                ftConfig {
+                  ftButton
+                }
               }
             }
           }
@@ -43,7 +56,10 @@ const Layout = ({ children, location }) => (
     `}
     render={data => (
       <ThemeProvider theme={theme}>
-        <MobileMenuContainer pages={data.primary_nav.edges} location={location}>
+        <MobileMenuContainer
+          pages={data.primary_nav.menuItems.edges}
+          location={location}
+        >
           <Helmet
             title={data.site.siteMetadata.title}
             meta={[
@@ -57,7 +73,7 @@ const Layout = ({ children, location }) => (
           />
           <Header
             siteTitle={data.site.siteMetadata.title}
-            pages={data.primary_nav.edges}
+            pages={data.primary_nav.menuItems.edges}
             location={location}
           />
           <SiteContent className="site-content">{children}</SiteContent>

@@ -3,12 +3,27 @@ import { graphql } from 'gatsby'
 import styled from 'styled-components'
 
 import PageContainer from '../components/PageContainer'
-import PageText from '../components/PageText'
+// import PageText from '../components/PageText'
 import Layout from '../components/Layout'
 import PageHeader from '../components/PageHeader'
 import SEO from '../components/seo/SEO'
+import {
+  CoreCodeBlock,
+  CoreHeadingBlock,
+  CoreParagraphBlock,
+} from 'wp-block-components'
 
-require('prismjs/themes/prism-tomorrow.css')
+import '../graphql/CoreCodeBlockFragment'
+import '../graphql/CoreHeadingBlockFragment'
+import '../graphql/CoreParagraphBlockFragment'
+
+const BlockComponents = {
+  WPGraphQL_CoreCodeBlock: CoreCodeBlock,
+  WPGraphQL_CoreHeadingBlock: CoreHeadingBlock,
+  WPGraphQL_CoreParagraphBlock: CoreParagraphBlock,
+}
+
+// require('prismjs/themes/prism-tomorrow.css')
 
 const Title = styled.div`
   font-family: 'Playfair Display';
@@ -34,7 +49,7 @@ const MetaItem = styled.div`
 
 const Tags = styled.div`
   display: flex;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
 `
 
 const Tag = styled.div`
@@ -51,77 +66,91 @@ const Tag = styled.div`
   }
 `
 
-export default function Template({
-  data, // this prop will be injected by the GraphQL query we'll write in a bit
-  location,
-}) {
-  const { title, content, date, tags, image } = data.cockpitPosts
-  const postTitle = title.value
-  const postHtml = content.value.childMarkdownRemark.html
-  const postDate = date.value
+const Template = (data, location) => {
+  const postData = data.data.wordPress.post
+  const { title, blocks, date, tags, excerpt } = postData
+  const image = postData.featuredImage.imageFile
+  const postDate = new Date(date)
   return (
     <Layout location={location}>
       <SEO
-        title={postTitle}
+        title={title}
         pathname={location.pathname}
-        desc={content.value.childMarkdownRemark.excerpt}
-        banner={image.value.banner.fixed.src}
-        article
+        desc={excerpt}
+        banner={image.banner.fixed}
       />
-      <PageHeader image={image.value.childImageSharp.fluid} height={'35vw'} />
+      <PageHeader image={image.childImageSharp.fluid} height={'35vw'} />
       <PageContainer>
         <Meta>
-          <MetaItem>{postDate}</MetaItem>
+          <MetaItem>
+            {postDate.toLocaleDateString('en-US', {
+              month: 'long',
+              year: 'numeric',
+              day: 'numeric',
+            })}
+          </MetaItem>
         </Meta>
-        <Title>{postTitle}</Title>
-        {tags.value !== undefined && (
+        <Title>{title}</Title>
+        {tags !== undefined && (
           <Tags>
-            {tags.value.map((tag, index) => {
-              return <Tag key={index}>{tag}</Tag>
+            {tags.nodes.map(tag => {
+              return <Tag key={tag.id}>{tag.name}</Tag>
             })}
           </Tags>
         )}
-        <PageText
-          dangerouslySetInnerHTML={{
-            __html: postHtml,
-          }}
-        />
+        {blocks.map((block, index) => {
+          const typename = block.__typename
+          if (BlockComponents[typename]) {
+            const Block = BlockComponents[typename]
+            if ('WPGraphQL_CoreCodeBlock' === typename) {
+              block.attributes.content = block.attributes.codeContent
+              delete block.attributes.codeContent
+              // block.attributes.className = `language-${block.attributes.language}`
+              // console.log(block.attributes)
+            }
+            return <Block key={index} attributes={block.attributes} />
+          } else {
+            return null
+          }
+        })}
       </PageContainer>
     </Layout>
   )
 }
 
+export default Template
+
 export const pageQuery = graphql`
-  query Post($cockpitId: String!) {
-    cockpitPosts(cockpitId: { eq: $cockpitId }) {
-      title {
-        value
-      }
-      content {
-        value {
-          childMarkdownRemark {
-            html
-            excerpt
+  query Post($id: ID) {
+    wordPress {
+      post: postBy(id: $id) {
+        title
+        featuredImage {
+          sourceUrl
+          imageFile {
+            childImageSharp {
+              fluid(maxWidth: 1900) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+            banner: childImageSharp {
+              fixed(width: 1280, height: 720) {
+                src
+              }
+            }
           }
         }
-      }
-      date {
-        value(formatString: "MMMM Do, YYYY")
-      }
-      tags {
-        value
-      }
-      image {
-        value {
-          childImageSharp {
-            fluid(maxWidth: 1900) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-          banner: childImageSharp {
-            fixed(width: 1280, height: 720) {
-              src
-            }
+        blocks {
+          __typename
+          ...CoreCodeBlock
+          ...CoreHeadingBlock
+          ...CoreParagraphBlock
+        }
+        date
+        tags {
+          nodes {
+            name
+            id
           }
         }
       }

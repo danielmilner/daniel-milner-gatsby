@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { graphql } from 'gatsby'
 import styled from 'styled-components'
 
 import PageContainer from '../components/PageContainer'
-import PageText from '../components/PageText'
+// import PageText from '../components/PageText'
 import Layout from '../components/Layout'
 import PageHeader from '../components/PageHeader'
 import SEO from '../components/seo/SEO'
+import {
+  CoreCodeBlock,
+  CoreHeadingBlock,
+  CoreParagraphBlock,
+} from 'wp-block-components'
 
-import CoreHeadingBlock from '../components/blocks/CoreHeadingBlock'
-import CoreParagraphBlock from '../components/blocks/CoreParagraphBlock'
+import CoreCodeBlockFragment from '../graphql/CoreCodeBlockFragment'
+import CoreHeadingBlockFragment from '../graphql/CoreHeadingBlockFragment'
+import CoreParagraphBlockFragment from '../graphql/CoreParagraphBlockFragment'
 
 const BlockComponents = {
-  WordPress_CoreHeadingBlock: CoreHeadingBlock,
-  WordPress_CoreParagraphBlock: CoreParagraphBlock,
+  WPGraphQL_CoreCodeBlock: CoreCodeBlock,
+  WPGraphQL_CoreHeadingBlock: CoreHeadingBlock,
+  WPGraphQL_CoreParagraphBlock: CoreParagraphBlock,
 }
 
-require('prismjs/themes/prism-tomorrow.css')
+// require('prismjs/themes/prism-tomorrow.css')
 
 const Title = styled.div`
   font-family: 'Playfair Display';
@@ -42,7 +49,7 @@ const MetaItem = styled.div`
 
 const Tags = styled.div`
   display: flex;
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
 `
 
 const Tag = styled.div`
@@ -60,9 +67,10 @@ const Tag = styled.div`
 `
 
 const Template = (data, location) => {
-  const postData = data.data.wp.post
-  const { title, blocks, date, tags } = postData
+  const postData = data.data.wordPress.post
+  const { title, blocks, date, tags, excerpt } = postData
   const image = postData.featuredImage.imageFile
+  const postDate = new Date(date)
   return (
     <Layout location={location}>
       <SEO
@@ -75,8 +83,8 @@ const Template = (data, location) => {
       <PageContainer>
         <Meta>
           <MetaItem>
-            {date.toLocaleDateString('en-US', {
-              weekday: 'long',
+            {postDate.toLocaleDateString('en-US', {
+              month: 'long',
               year: 'numeric',
               day: 'numeric',
             })}
@@ -85,15 +93,25 @@ const Template = (data, location) => {
         <Title>{title}</Title>
         {tags !== undefined && (
           <Tags>
-            {tags.edges.map((node, index) => {
-              return <Tag key={index}>{node.name}</Tag>
+            {tags.nodes.map(tag => {
+              return <Tag key={tag.id}>{tag.name}</Tag>
             })}
           </Tags>
         )}
         {blocks.map((block, index) => {
           const typename = block.__typename
-          const $Block = BlockComponents[typename]
-          return <$Block key={index} {...block.attributes} />
+          if (BlockComponents[typename]) {
+            const Block = BlockComponents[typename]
+            if ('WPGraphQL_CoreCodeBlock' === typename) {
+              block.attributes.content = block.attributes.codeContent
+              delete block.attributes.codeContent
+              // block.attributes.className = `language-${block.attributes.language}`
+              // console.log(block.attributes)
+            }
+            return <Block key={index} attributes={block.attributes} />
+          } else {
+            return null
+          }
         })}
       </PageContainer>
     </Layout>
@@ -103,9 +121,9 @@ const Template = (data, location) => {
 export default Template
 
 export const pageQuery = graphql`
-  query Page($id: Int) {
-    wp {
-      post: postBy(postId: $id) {
+  query Post($id: ID) {
+    wordPress {
+      post: postBy(id: $id) {
         title
         featuredImage {
           sourceUrl
@@ -124,56 +142,18 @@ export const pageQuery = graphql`
         }
         blocks {
           __typename
+          ...CoreCodeBlock
           ...CoreHeadingBlock
           ...CoreParagraphBlock
         }
         date
         tags {
-          edges {
-            node {
-              name
-            }
+          nodes {
+            name
+            id
           }
         }
       }
     }
   }
 `
-
-// export const pageQuery = graphql`
-//   query Post($cockpitId: String!) {
-//     cockpitPosts(cockpitId: { eq: $cockpitId }) {
-//       title {
-//         value
-//       }
-//       content {
-//         value {
-//           childMarkdownRemark {
-//             html
-//             excerpt
-//           }
-//         }
-//       }
-//       date {
-//         value(formatString: "MMMM Do, YYYY")
-//       }
-//       tags {
-//         value
-//       }
-//       image {
-//         value {
-//           childImageSharp {
-//             fluid(maxWidth: 1900) {
-//               ...GatsbyImageSharpFluid_withWebp
-//             }
-//           }
-//           banner: childImageSharp {
-//             fixed(width: 1280, height: 720) {
-//               src
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `

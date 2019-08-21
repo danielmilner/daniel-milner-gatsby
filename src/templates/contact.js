@@ -3,23 +3,27 @@ import { graphql } from 'gatsby'
 import PageHeader from '../components/PageHeader'
 import PageTitle from '../components/PageTitle'
 import PageContainer from '../components/PageContainer'
-import PageText from '../components/PageText'
 import Layout from '../components/Layout'
 import SEO from '../components/seo/SEO'
 import ContactForm from '../components/ContactForm'
+import {
+  CoreCodeBlock,
+  CoreHeadingBlock,
+  CoreParagraphBlock,
+} from 'wp-block-components'
 
-import CoreHeadingBlock from '../components/blocks/CoreHeadingBlock'
-import CoreParagraphBlock from '../components/blocks/CoreParagraphBlock'
+import CoreCodeBlockFragment from '../graphql/CoreCodeBlockFragment'
+import CoreHeadingBlockFragment from '../graphql/CoreHeadingBlockFragment'
+import CoreParagraphBlockFragment from '../graphql/CoreParagraphBlockFragment'
 
 const BlockComponents = {
-  WordPress_CoreHeadingBlock: CoreHeadingBlock,
-  WordPress_CoreParagraphBlock: CoreParagraphBlock,
+  WPGraphQL_CoreCodeBlock: CoreCodeBlock,
+  WPGraphQL_CoreHeadingBlock: CoreHeadingBlock,
+  WPGraphQL_CoreParagraphBlock: CoreParagraphBlock,
 }
 
-require('prismjs/themes/prism-tomorrow.css')
-
 const Template = (data, location) => {
-  const pageData = data.data.wp.page
+  const pageData = data.data.wordPress.page
   const { title, blocks, excerpt } = pageData
   const image = pageData.featuredImage.imageFile
   const heading_title = pageData.ftConfig.headingTitle
@@ -36,8 +40,14 @@ const Template = (data, location) => {
         <PageTitle>{title}</PageTitle>
         {blocks.map((block, index) => {
           const typename = block.__typename
-          const $Block = BlockComponents[typename]
-          return <$Block key={index} {...block.attributes} />
+          const Block = BlockComponents[typename]
+          return (
+            <Block
+              key={index}
+              attributes={block.attributes}
+              block={theme.block}
+            />
+          )
         })}
         <ContactForm />
       </PageContainer>
@@ -48,9 +58,9 @@ const Template = (data, location) => {
 export default Template
 
 export const pageQuery = graphql`
-  query contactPage($id: Int) {
-    wp {
-      page: pageBy(pageId: $id) {
+  query contactPage($id: ID) {
+    wordPress {
+      page: pageBy(id: $id) {
         title
         excerpt
         featuredImage {
@@ -70,6 +80,7 @@ export const pageQuery = graphql`
         }
         blocks {
           __typename
+          ...CoreCodeBlock
           ...CoreHeadingBlock
           ...CoreParagraphBlock
         }
@@ -80,38 +91,3 @@ export const pageQuery = graphql`
     }
   }
 `
-
-// export const pageQuery = graphql`
-//   query contactPage($cockpitId: String!) {
-//     cockpitPages(cockpitId: { eq: $cockpitId }) {
-//       title {
-//         value
-//       }
-//       content {
-//         value {
-//           childMarkdownRemark {
-//             html
-//             excerpt
-//           }
-//         }
-//       }
-//       heading_title {
-//         value
-//       }
-//       image {
-//         value {
-//           childImageSharp {
-//             fluid(maxWidth: 1900) {
-//               ...GatsbyImageSharpFluid_withWebp
-//             }
-//           }
-//           banner: childImageSharp {
-//             fixed(width: 1280, height: 720) {
-//               src
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `

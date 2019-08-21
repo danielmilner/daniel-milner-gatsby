@@ -7,8 +7,6 @@ import GridContainer from '../components/GridContainer'
 import PostListItem from '../components/PostListItem'
 import SEO from '../components/seo/SEO'
 
-require('prismjs/themes/prism-tomorrow.css')
-
 const Pagination = styled.div`
   display: flex;
 `
@@ -24,30 +22,30 @@ const PageNextLink = styled(Link)`
 
 class PostListTemplate extends React.Component {
   render() {
-    const posts = this.props.data.wp.posts.edges
+    const posts = this.props.data.wordPress.posts.nodes
     return (
       <Layout location={this.props.location}>
         <SEO
           title={`Blog`}
           pathname={this.props.location.pathname}
           desc={`Daniel Milner's blog posts.`}
-          banner={this.props.data.wp.featuredImage.imageFile.banner.fixed.src}
+          banner={this.props.data.HeaderImage.banner.fixed.src}
         />
         <PageHeader
           image={this.props.data.HeaderImage.childImageSharp.fluid}
           title={`Blog Posts`}
         />
         <GridContainer>
-          {posts.map(({ node }) => {
-            const { title, slug, date, image, tags, cockpitId } = node
+          {posts.map(node => {
+            const { title, slug, date, featuredImage, tags, postId } = node
             return (
               <PostListItem
-                key={cockpitId}
-                title={title.value}
-                link={slug.value}
-                date={date.value}
-                image={image.value}
-                tags={tags.value}
+                key={postId}
+                title={title}
+                link={slug}
+                date={date}
+                image={featuredImage}
+                tags={tags}
               />
             )
           })}
@@ -72,30 +70,31 @@ class PostListTemplate extends React.Component {
 export default PostListTemplate
 
 export const pageQuery = graphql`
-  query PostList($skip: Int!, $limit: Int!) {
-    allCockpitPosts(
-      skip: $skip
-      limit: $limit
-      sort: { fields: [date___value], order: DESC }
-      filter: { published: { value: { eq: true } } }
-    ) {
-      edges {
-        node {
-          cockpitId
-          title {
-            value
-          }
-          slug {
-            value
-          }
-          date {
-            value(formatString: "MMMM Do, YYYY")
-          }
+  query PostList($first: Int, $after: String) {
+    wordPress {
+      posts(
+        where: { status: PUBLISH, orderby: [{ field: DATE, order: DESC }] }
+        first: $first
+        after: $after
+      ) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
+          postId
+          title
+          slug
+          date
           tags {
-            value
+            nodes {
+              name
+              id
+            }
           }
-          image {
-            value {
+          featuredImage {
+            sourceUrl
+            imageFile {
               childImageSharp {
                 fluid(maxWidth: 1280) {
                   ...GatsbyImageSharpFluid_withWebp

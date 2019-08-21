@@ -39,7 +39,7 @@ const Layout = ({ children, location }) => (
         #     }
         #   }
         # }
-        primary_nav: wp {
+        primary_nav: wordPress {
           menuItems(where: { location: PRIMARY }) {
             edges {
               node {

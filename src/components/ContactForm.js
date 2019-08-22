@@ -71,7 +71,7 @@ const SubmitButton = styled.input`
 
 export default function ContactForm() {
   return (
-    <Form name="contact" method="post" netlify>
+    <Form name="contact" method="post" data-netlify="true">
       <Input placeholder="Your name" type="text" name="name" required />
       <Input placeholder="Your email" type="email" name="email" required />
       <TextArea placeholder="Your message..." name="message" required />

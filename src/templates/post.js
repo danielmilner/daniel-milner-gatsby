@@ -7,23 +7,13 @@ import PageContainer from '../components/PageContainer'
 import Layout from '../components/Layout'
 import PageHeader from '../components/PageHeader'
 import SEO from '../components/seo/SEO'
-import {
-  CoreCodeBlock,
-  CoreHeadingBlock,
-  CoreParagraphBlock,
-} from 'wp-block-components'
+import { CoreBlock } from 'wp-block-components'
 
 import '../graphql/CoreCodeBlockFragment'
 import '../graphql/CoreHeadingBlockFragment'
+import '../graphql/CoreImageBlockFragment'
+import '../graphql/CoreListBlockFragment'
 import '../graphql/CoreParagraphBlockFragment'
-
-const BlockComponents = {
-  WPGraphQL_CoreCodeBlock: CoreCodeBlock,
-  WPGraphQL_CoreHeadingBlock: CoreHeadingBlock,
-  WPGraphQL_CoreParagraphBlock: CoreParagraphBlock,
-}
-
-// require('prismjs/themes/prism-tomorrow.css')
 
 const Title = styled.div`
   font-family: 'Playfair Display';
@@ -49,7 +39,7 @@ const MetaItem = styled.div`
 
 const Tags = styled.div`
   display: flex;
-  margin: 1.5rem 0;
+  margin: 1.5rem 0 2rem 0;
 `
 
 const Tag = styled.div`
@@ -99,19 +89,11 @@ const Template = (data, location) => {
           </Tags>
         )}
         {blocks.map((block, index) => {
-          const typename = block.__typename
-          if (BlockComponents[typename]) {
-            const Block = BlockComponents[typename]
-            if ('WPGraphQL_CoreCodeBlock' === typename) {
-              block.attributes.content = block.attributes.codeContent
-              delete block.attributes.codeContent
-              // block.attributes.className = `language-${block.attributes.language}`
-              // console.log(block.attributes)
-            }
-            return <Block key={index} attributes={block.attributes} />
-          } else {
-            return null
+          if ('WPGraphQL_CoreCodeBlock' === block.__typename) {
+            block.attributes.content = block.attributes.codeContent
+            delete block.attributes.codeContent
           }
+          return <CoreBlock key={index} block={block} />
         })}
       </PageContainer>
     </Layout>
@@ -144,6 +126,8 @@ export const pageQuery = graphql`
           __typename
           ...CoreCodeBlock
           ...CoreHeadingBlock
+          ...CoreImageBlock
+          ...CoreListBlock
           ...CoreParagraphBlock
         }
         date

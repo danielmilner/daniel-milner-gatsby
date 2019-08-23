@@ -5,21 +5,13 @@ import PageHeader from '../components/PageHeader'
 import Layout from '../components/Layout'
 import DevIcons from '../components/DevIcons'
 import SEO from '../components/seo/SEO'
-import {
-  CoreCodeBlock,
-  CoreHeadingBlock,
-  CoreParagraphBlock,
-} from 'wp-block-components'
+import { CoreBlock } from 'wp-block-components'
 
 import '../graphql/CoreCodeBlockFragment'
 import '../graphql/CoreHeadingBlockFragment'
+import '../graphql/CoreImageBlockFragment'
+import '../graphql/CoreListBlockFragment'
 import '../graphql/CoreParagraphBlockFragment'
-
-const BlockComponents = {
-  WPGraphQL_CoreCodeBlock: CoreCodeBlock,
-  WPGraphQL_CoreHeadingBlock: CoreHeadingBlock,
-  WPGraphQL_CoreParagraphBlock: CoreParagraphBlock,
-}
 
 const ContentContainer = styled.div`
   margin: 0;
@@ -93,9 +85,11 @@ const Template = (data, location) => {
       <ContentContainer>
         <ContentInner>
           {blocks.map((block, index) => {
-            const typename = block.__typename
-            const Block = BlockComponents[typename]
-            return <Block key={index} attributes={block.attributes} />
+            if ('WPGraphQL_CoreCodeBlock' === block.__typename) {
+              block.attributes.content = block.attributes.codeContent
+              delete block.attributes.codeContent
+            }
+            return <CoreBlock key={index} block={block} />
           })}
         </ContentInner>
       </ContentContainer>

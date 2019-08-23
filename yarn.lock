@@ -12192,10 +12192,10 @@ worker-farm@^1.7.0:
   dependencies:
     errno "~0.1.7"
 
-wp-block-components@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/wp-block-components/-/wp-block-components-0.1.1.tgz#1dce9b46403cb49d829946f8fc7b3e72a661130f"
-  integrity sha512-6fejwbEQDKBQ23FXo90O+iF27kMwv2i0VtZo8sz687mY2pieEddahck9f24w0ZENB7HQGXO+5YstYrpuk2fOFg==
+wp-block-components@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/wp-block-components/-/wp-block-components-0.2.0.tgz#eba28c087f11738a2126d242560aa2580d2f5a98"
+  integrity sha512-/yzywbfQJkRPCoI00kGFnsBTdp0Afe09VRYwQL9nuUk9djuo1c12V6SCf5p4bG9g4voiVp8ZhsSuqW8ndPxicQ==
   dependencies:
     prop-types "^15.7.2"
     react-syntax-highlighter "^11.0.2"

@@ -6,21 +6,13 @@ import PageContainer from '../components/PageContainer'
 import Layout from '../components/Layout'
 import SEO from '../components/seo/SEO'
 import ContactForm from '../components/ContactForm'
-import {
-  CoreCodeBlock,
-  CoreHeadingBlock,
-  CoreParagraphBlock,
-} from 'wp-block-components'
+import { CoreBlock } from 'wp-block-components'
 
 import '../graphql/CoreCodeBlockFragment'
 import '../graphql/CoreHeadingBlockFragment'
+import '../graphql/CoreImageBlockFragment'
+import '../graphql/CoreListBlockFragment'
 import '../graphql/CoreParagraphBlockFragment'
-
-const BlockComponents = {
-  WPGraphQL_CoreCodeBlock: CoreCodeBlock,
-  WPGraphQL_CoreHeadingBlock: CoreHeadingBlock,
-  WPGraphQL_CoreParagraphBlock: CoreParagraphBlock,
-}
 
 const Template = (data, location) => {
   const pageData = data.data.wordPress.page
@@ -39,9 +31,11 @@ const Template = (data, location) => {
       <PageContainer>
         <PageTitle>{title}</PageTitle>
         {blocks.map((block, index) => {
-          const typename = block.__typename
-          const Block = BlockComponents[typename]
-          return <Block key={index} attributes={block.attributes} />
+          if ('WPGraphQL_CoreCodeBlock' === block.__typename) {
+            block.attributes.content = block.attributes.codeContent
+            delete block.attributes.codeContent
+          }
+          return <CoreBlock key={index} block={block} />
         })}
         <ContactForm />
       </PageContainer>

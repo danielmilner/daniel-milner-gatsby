@@ -1,11 +1,11 @@
 # These rules will change if you change your site’s custom domains or HTTPS settings
 
 # Redirect domain aliases to primary domain
-https://www.developer.lol/* https://theokay.dev/:splat 301!
-https://developer.lol/* https://theokay.dev/:splat 301!
-https://danielmilner.com/* https://theokay.dev/:splat 301!
-https://theok.dev/* https://theokay.dev/:splat 301!
-https://www.theok.dev/* https://theokay.dev/:splat 301!
+https://www.developer.lol/* https://danielmilner.com/:splat 301!
+https://developer.lol/* https://danielmilner.com/:splat 301!
+https://theokay.dev/* https://danielmilner.com/:splat 301!
+https://theok.dev/* https://danielmilner.com/:splat 301!
+https://www.theok.dev/* https://danielmilner.com/:splat 301!
 
 # Optional: Redirect default Netlify subdomain to primary domain
-https://danielmilner.netlify.com/* https://theokay.dev/:splat 301!
+https://danielmilner.netlify.com/* https://danielmilner.com/:splat 301!

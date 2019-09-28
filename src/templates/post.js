@@ -39,7 +39,8 @@ const MetaItem = styled.div`
 
 const Tags = styled.div`
   display: flex;
-  margin: 1.5rem 0 2rem 0;
+  flex-wrap: wrap;
+  margin: 1.25rem -0.25rem 0 -0.25rem;
 `
 
 const Tag = styled.div`
@@ -51,9 +52,7 @@ const Tag = styled.div`
   background-color: ${props => props.theme.altTextColor};
   padding: 0.1rem 0.8rem;
   border-radius: 0.4rem;
-  &:not(:first-of-type) {
-    margin-left: 0.5rem;
-  }
+  margin: 0.25rem;
 `
 
 const Template = (data, location) => {
@@ -69,7 +68,7 @@ const Template = (data, location) => {
         desc={excerpt}
         banner={image.banner.fixed}
       />
-      <PageHeader image={image.childImageSharp.fluid} height={'35vw'} />
+      <PageHeader image={image.childImageSharp.fluid} height={'25vw'} />
       <PageContainer>
         <Meta>
           <MetaItem>

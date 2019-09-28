@@ -1,8 +1,8 @@
 {
   "name": "daniel-milner-website",
   "description": "Daniel Milner",
-  "version": "1.0.0",
-  "author": "Daniel Milner <dmilner@gmail.com>",
+  "version": "1.0.1",
+  "author": "Daniel Milner <hello@danielmilner.com>",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-brands-svg-icons": "^5.11.2",

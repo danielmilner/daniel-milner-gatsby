@@ -59,7 +59,8 @@ const MetaItem = styled.div`
 
 const Tags = styled.div`
   display: flex;
-  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  margin: 1.25rem -0.25rem 0 -0.25rem;
 `
 
 const Tag = styled.div`
@@ -71,9 +72,7 @@ const Tag = styled.div`
   background-color: ${props => props.theme.altTextColor};
   padding: 0.1rem 0.8rem;
   border-radius: 0.4rem;
-  &:not(:first-of-type) {
-    margin-left: 0.5rem;
-  }
+  margin: 0.25rem;
 `
 
 const PostListItem = props => {
